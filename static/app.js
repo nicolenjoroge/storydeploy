@@ -11,7 +11,7 @@ let state = {};
 
 const mainContent = document.getElementById("main-content");
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "";
 ``;
 
 function updateSidebar(section) {
@@ -125,7 +125,7 @@ function openDraftDB() {
 //Load All Content from the last saved Snapshot
 const loadContent = async () => {
   try {
-    const res = await fetch(`${API_BASE}/`);
+    const res = await fetch(`${API_BASE}/api/content`);
 
     const data = await res.json();
 

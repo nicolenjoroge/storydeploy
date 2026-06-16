@@ -60,9 +60,9 @@ def write_data(data):
 # ---------------------------------------
 # ✅ GET FULL CONTENT
 # ---------------------------------------
-# @app.get("/")
-# def get_all():
-#     return read_data()
+@app.get("/api/content")
+def get_all():
+    return read_data()
 
 @app.get("/")
 def home():

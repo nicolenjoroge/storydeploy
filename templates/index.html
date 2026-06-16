@@ -1342,7 +1342,7 @@ footer { background: #2a2320; padding: 36px 0; border-top: 1px solid rgba(255,25
 /* ─────────────────────────────────────────────────────────────
    CONFIG
 ───────────────────────────────────────────────────────────── */
-const API_BASE = window.STORYHUB_API_BASE || 'http://127.0.0.1:8000';
+const API_BASE = window.STORYHUB_API_BASE || '';;
 
 /* ─────────────────────────────────────────────────────────────
    ESCAPE HELPER
@@ -1490,7 +1490,7 @@ async function loadData() {
   try {
     const bar = document.getElementById('loading-bar');
     bar.style.width = '40%';
-    const res = await fetch(`${API_BASE}/`);
+    const res = await fetch(`${API_BASE}/api/content`);
     bar.style.width = '80%';
     const data = await res.json();
     STATE = (data && Object.keys(data).length) ? data : SEED;
