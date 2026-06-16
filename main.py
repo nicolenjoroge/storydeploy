@@ -60,9 +60,9 @@ def write_data(data):
 # ---------------------------------------
 # ✅ GET FULL CONTENT
 # ---------------------------------------
-@app.get("/")
-def get_all():
-    return read_data()
+# @app.get("/")
+# def get_all():
+#     return read_data()
 
 @app.get("/")
 def home():
@@ -181,7 +181,7 @@ async def upload_file(file: UploadFile = File(...)):
     with open(path, "wb") as f:
         shutil.copyfileobj(file.file, f)
 
-    return {"url": f"{API_BASE}/stream/{filename}"}
+    return {"url": f"/stream/{filename}"}
 
 # ---------------------------------------
 # ✅ DELETE MEDIA FROM STORAGE
@@ -313,12 +313,12 @@ def add_item(section: str, list_name: str, item: dict):
 #         h11_max_incomplete_event_size=500 * 1024 * 1024,  # 500MB
 #     )
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 8000)),
-        timeout_keep_alive=300,        # keep connection alive for 5 mins
-        h11_max_incomplete_event_size=500 * 1024 * 1024,
-    )
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(
+#         "main:app",
+#         host="0.0.0.0",
+#         port=int(os.environ.get("PORT", 8000)),
+#         timeout_keep_alive=300,        # keep connection alive for 5 mins
+#         h11_max_incomplete_event_size=500 * 1024 * 1024,
+#     )
