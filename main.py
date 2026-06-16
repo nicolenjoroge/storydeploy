@@ -4,7 +4,7 @@ import json
 from fastapi.middleware.cors import CORSMiddleware
 import os, uuid
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 import shutil
 import time
 import gc
@@ -64,6 +64,13 @@ def write_data(data):
 def get_all():
     return read_data()
 
+@app.get("/")
+def home():
+    return FileResponse("templates/index.html")
+
+@app.get("/cmsportal")
+def page2():
+    return FileResponse("templates/cmsportal.html")
 
 # ---------------------------------------
 # ✅ GET MEDIA(IMAGES/VIDEOS)
