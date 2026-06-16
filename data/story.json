@@ -1,0 +1,299 @@
+{
+  "section_1": {
+    "description": [
+      "At NCBA, Business Process Management (BPM) sits at the heart of transformation driving how we simplify, digitize, and continuously improve the way we work.",
+      "In 2026, BPM took on a bigger mission: to lead the REA (Reduce, Eliminate, Automate) programme and accelerate innovation across the bank.",
+      "From launching REA in February through a bank-wide campaign, to winning the internal innovation Hackathon, BPM has continued to position itself as the engine of transformation.",
+      "Today, BPM is not just supporting processes we are:"
+    ],
+    "key_points": [
+      "Driving automation across key business areas",
+      "Enabling real-time visibility of operations",
+      "Reducing manual work and operational risk",
+      "Delivering faster, smarter customer journeys"
+    ],
+    "closing": "This is how we are shaping a simpler, more digital NCBA."
+  },
+  "section_2": {
+    "description": [
+      "REA (Reduce, Eliminate, Automate) is a bank-wide initiative designed to challenge how we work, eliminate inefficiencies, and unlock new ways of delivering value.",
+      "Launched in February 2026, BPM created a platform for every staff member to contribute ideas through the Innovation Nexus.",
+      "The programme has rapidly grown into a powerful engine for innovation turning ideas into real solutions that improve customer experience, reduce costs, and increase efficiency.",
+      "What started as an idea platform is now delivering tangible impact across the bank."
+    ],
+    "metrics": {
+      "ideas_submitted": 313,
+      "ideas_in_pipeline": "171",
+      "man_hours_saved": 200000,
+      "cost_savings_identified_kes": 47000000,
+      "cost_savings_realized_kes": 6800000,
+      "deployed_initiatives": 27,
+      "current_cost_savings": 3200000,
+      "current_man_hours_saved": 6876
+    },
+    "closing": "From ideas to outcomes - REA is driving real impact across NCBA."
+  },
+  "section_3": {
+    "initiatives": [
+      {
+        "name": "NCBA Automation Center",
+        "business_area": "BPM",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "The NCBA Automation Center is your central hub for digital solutions, bringing together automation, workflows, and innovation initiatives that simplify how we work across the bank.  It is where paperless ideas come to life, creating smart and efficient experiences. \nBrings together Power Apps-driven automation and paperless solutions in one place, simplifying the use of digital tools across the bank",
+        "tangible_benefits": [
+          {
+            "type": "power_applications",
+            "value": 30
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/71b9b3a6af9348f98d708faf488a3f71.png"
+      },
+      {
+        "name": "Document Approval",
+        "business_area": "All",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "The Document Approval System is a digital workflow platform designed to manage and streamline the process of reviewing and authorizing documents within NCBA.\nIt replaces manual, email-based methods with automated, trackable workflows enabling faster decision-making, clear accountability, and improved governance across teams.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 0
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/af28ca2fd9c64cab82f5f7d111af316d.png"
+      },
+      {
+        "name": "Rate My Service",
+        "business_area": "Customer Experience",
+        "solution_type": "Power Apps",
+        "category": "",
+        "description": "Rate My Service platform is a feedback channel that allows internal customers at NCBA to share their service experience in real time. It creates a structured way to capture perceptions of service quality across teams.\nIt enables users to provide and receive feedback efficiently, track service ratings over time, and view both individual and team performance. This gives valuable insights into areas of improvement and helps maintain consistently high service standards.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 0
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/279bcc60e88549bea4e836356f632a4a.jpg"
+      },
+      {
+        "name": "Branch Snapcheck",
+        "business_area": "Branch",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "The Branch Snapcheck is a surprise control exercise carried out by independent staff to ensure objectivity. It is designed to identify and address operational gaps within branches, strengthening oversight and compliance.\nThe proposed automation streamlines these checks by enabling centralized assignment, tracking, and validation. With features like exception tracking, report templates, and a holistic view of branch controls, it enhances efficiency while reinforcing the bank\u2019s control environment.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 90865
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/64f1d4a904b24916adfeb39ed0afed4b.png"
+      },
+      {
+        "name": "Merchandise Hub",
+        "business_area": "MCC",
+        "solution_type": "Power Apps",
+        "category": "",
+        "description": "The NCBA Digital Merchandise Hub is a centralized platform designed to bring together all merchandise operations across the organization. It provides a single, unified system where departments and branches can manage merchandise activities, supporting efficiency, accountability, and a consistent brand experience.\nThe hub streamlines the entire merchandise process from requests to approvals and distribution by replacing manual processes with a structured digital workflow. It improves visibility across the business, enhances control, and enables faster, more efficient management of merchandise for customer engagement activities.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 2288
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/01e633db9056463694153e469ba975ab.png"
+      },
+      {
+        "name": "Visitor Management App",
+        "business_area": "BPM",
+        "solution_type": "Power Apps",
+        "category": "",
+        "description": "The app is an automated solution developed to replace manual paper-based visitor records at NCBA premises. It provides a secure, centralized way to register and monitor visitors, reducing the risks associated with physical logs.\nBuilt on Microsoft\u2019s Power Platform, the app streamlines visitor tracking by digitizing records, lowering paper costs, and enhancing data protection. It enables real-time monitoring of visitor activity, ensuring both efficiency and stronger security controls.",
+        "tangible_benefits": [
+          {
+            "type": "cost_savings_kes",
+            "value": 72000
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/523a741268d54629acec016885c4ecb1.png"
+      },
+      {
+        "name": "HR Onboarding Bot",
+        "business_area": "HR",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "The HR Onboarding System is an automated solution designed to simplify and digitize the employee onboarding process at NCBA. It replaces the traditional manual approach, which involved sending over 10 separate emails to candidates, with a streamlined workflow.\nBy automating repetitive and rule-based tasks, the system reduces administrative workload, ensures consistency, and accelerates the onboarding experience. This makes the process more efficient for HR teams while providing a smoother, more professional journey for new employees.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 1056
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/c4bed0392085475896772903fc7761ef.png"
+      },
+      {
+        "name": "Daily Excesses RPA Bot",
+        "business_area": "NCBA",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "The Daily Excesses RPA Bot is an automated solution designed to monitor newly opened accounts that remain unfunded. It ensures that accounts are tracked from day 10 of opening, reducing manual oversight and improving compliance.\nThe bot checks reports daily, flags accounts that are still unfunded, and triggers email reminders to customers. If accounts remain unfunded by day 14, the bot initiates closure, streamlining the process while maintaining efficiency and accountability.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 0
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/922bbedc259346d78350072643b157d1.png"
+      },
+      {
+        "name": "EVA",
+        "business_area": "NCBA",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "Our AI-powered digital assistant who is always ready to help you find answers by navigating our policies and procedures.\nBrings all the information you need into one place, so you can quickly find answers, solve queries, and move on with your work without digging into policies and paperwork",
+        "tangible_benefits": [
+          {
+            "type": "users",
+            "value": 3300
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/6a26ca69582b4272a2a3171cfa516d32.png"
+      },
+      {
+        "name": "Docusign Integration for Staff",
+        "business_area": "NCBA",
+        "solution_type": "RPA",
+        "category": "",
+        "description": "DocuSign Integration for staff is a digital solution that replaces manual, paper-based document signing with a secure, centralized electronic platform. It acts as a single hub where staff can create, send, track, and manage documents requiring signatures from both internal and external parties, ensuring easier access, visibility, and future reference.\nThe solution enables staff to send and sign documents anytime and from anywhere, while securely verifying signers\u2019 identities without the need for physical presence. It streamlines workflows by reducing turnaround time, lowers operational costs linked to paper and printing, and automatically generates audit trails and legally admissible records, improving efficiency, compliance, and overall service delivery.",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 698
+          },
+          {
+            "type": "papers_saved",
+            "value": 21143
+          },
+          {
+            "type": "same_day_completion_pct",
+            "value": 85.36
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/d6eb62537f1f47ff95a5efa297e8bfcf.png"
+      },
+      {
+        "name": "7 Departments supported by EVA",
+        "business_area": "ALL",
+        "solution_type": "RPA",
+        "category": "in_action",
+        "description": "Transactional Banking Product Guideline, tariffs and Procedures \nFinance - Tax Laws \nBusiness Process Management Process and User Guides \nAsset Finance Procedures \nBancassurance Procedures \nContact Centre Knowledge Hub \nNCBAIG Policies and Procedures ",
+        "tangible_benefits": [
+          {
+            "type": "man_hours",
+            "value": 0
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/3719793f7af74246810bf754f8a54b89.png"
+      },
+      {
+        "name": "Contact Center Quality Management Tool",
+        "business_area": "Customer Experience",
+        "solution_type": "RPA",
+        "category": "in_action",
+        "description": "The Contact Centre Quality Management Tool is an in-house solution that centralizes the evaluation of non-call customer interactions within a single, scalable platform. It replaces manual and fragmented reviews from external systems, improving consistency, visibility, and efficiency in monitoring customer communication quality.\nThe tool enables Quality Assurance Analysts, Team Leaders, and Champions to review and score written interactions in a structured way. It supports accurate performance tracking, highlights improvement areas, and drives continuous quality enhancement through timely, data-driven feedback aligned with service standards.",
+        "tangible_benefits": [
+          {
+            "type": "cost_savings_kes",
+            "value": 3270000
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/08758d49bcf643369898a7e174f47a3f.png"
+      },
+      {
+        "name": "Static Card Data T24",
+        "business_area": "Finance",
+        "solution_type": "RPA",
+        "category": "in_action",
+        "description": "The process relies on T24-generated files being correctly dropped into a shared network folder using a specific naming format. If the files are missing or fail to download, the automated workflow stops and sends an exception email, leading to delays, process interruptions, and the need for manual intervention.\nImplement a file validation and exception-handling mechanism within the Power Automate workflow to check for file availability before execution. If files are present, the process proceeds as expected; if not, an automated alert is triggered and the process stops gracefully, improving reliability, visibility, and overall efficiency.",
+        "tangible_benefits": [
+          {
+            "type": "cost_savings_kes",
+            "value": 3270000
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/30d14aeada3c4218a04d78a715e5ad32.png"
+      },
+      {
+        "name": "Monthly Disbursement Report and Account Summary Reports \u200b in Uganda ",
+        "business_area": "Core Banking",
+        "solution_type": "RPA",
+        "category": "in_action",
+        "description": "The current process of generating monthly bank account reports is largely manual, involving data extraction, cleaning, and analysis from core banking systems. This lack of automated access leads to inefficiencies, increased risk of errors, delays in report preparation, and limited visibility for business, compliance, and operational decision-making.\nImplement an RPA-driven automated process to extract, filter, and analyze core banking data, generating accurate monthly reports on account status and customer segmentation. The solution standardizes the workflow, eliminates manual intervention, ensures data accuracy, and delivers actionable insights to relevant stakeholders for timely review and decision-making.",
+        "tangible_benefits": [
+          {
+            "type": "cost_savings_kes",
+            "value": 3270000
+          }
+        ],
+        "image": "http://127.0.0.1:8000/stream/0049222da91348acb1a69c232528852d.png"
+      }
+    ],
+    "closing": "These initiatives represent just the beginning - more are progressing across the pipeline."
+  },
+  "section_4": {
+    "innovations": [
+      {
+        "name": "EVA AI Digital Assistant",
+        "description": "An AI-powered assistant that centralizes policies, procedures, and knowledge into one intelligent interface for instant access.",
+        "video": "http://127.0.0.1:8000/stream/69fd221813a2423a8b47e3d3c6aa2201.mp4"
+      },
+      {
+        "name": "MARA",
+        "description": "Multiple Agents, One Mission",
+        "video": "http://127.0.0.1:8000/stream/71935725f17f4fb580d3bac1f03c3523.mp4"
+      }
+    ]
+  },
+  "section_5": {
+    "items": [
+      {
+        "name": "Automated Statements",
+        "description": "The Statement Printing Portal enables customers to receive their account statements instantly in a secure, digital, and paperless format. By incorporating QR verification and digital certification, each statement is authenticated and can be easily verified when shared with third parties.\nThis solution significantly reduces turnaround time, eliminates reliance on physical printing, and minimizes manual intervention. It also supports the bank\u2019s broader sustainability agenda by reducing paper usage and operational costs.",
+        "benefits": [
+          "Faster delivery",
+          "Secure verification",
+          "Supports paperless banking"
+        ]
+      },
+      {
+        "name": "Instant Statements on NCBA Now",
+        "description": "Customers can now generate their account statements instantly through NCBA Now, offering a faster and more convenient alternative to traditional request channels. There is no need to visit a branch or wait for manual processing.\nThis enhancement improves customer experience by putting control directly in the customer\u2019s hands, while also improving internal efficiency.\n          ",
+        "benefits": [
+          "Immediate access",
+          "Reduced operational workload",
+          "24/7 availability"
+        ]
+      },
+      {
+        "name": "Account Dormancy Rules Updated",
+        "description": "The dormancy period for accounts has been extended from 3 months to 18 months, allowing customers to keep their accounts active for longer without frequent transactions.\nThis change reduces customer inconvenience, limits unnecessary account restrictions, and improves the overall account management experience.\n          ",
+        "benefits": [
+          "Accounts stay active longer",
+          "Simplified reactivation",
+          "No immediate transactions required after activation"
+        ]
+      },
+      {
+        "name": "Contact Centre Quality Management Tool",
+        "description": "The Contact Centre Quality Management solution has been transitioned to an in-house Power App, replacing reliance on external systems. This allows for better control, customization, and cost efficiency.\nThis initiative strengthens internal capabilities, enhances visibility into service performance, and ensures a more consistent and high-quality customer experience.\n          ",
+        "benefits": [
+          "KES 3.27M cost savings",
+          "Centralized quality management",
+          "Improved service consistency"
+        ]
+      }
+    ]
+  }
+}
