@@ -907,11 +907,11 @@
     <script>
       let STATE = {};
 
-      const API_BASE = window.STORYHUB_API_BASE || "http://127.0.0.1:8000";
+      const API_BASE = "";
 
       async function loadData(){
         try {
-        const res = await fetch(`${API_BASE}/`)
+        const res = await fetch(`${API_BASE}/api/content`)
         const data = await res.json();
 
         // console.log(data);

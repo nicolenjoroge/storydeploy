@@ -519,7 +519,7 @@
     </div>
 
     <script>
-      const API_BASE = "http://127.0.0.1:8000";
+      const API_BASE = "";
 
       /* ─────────────────────────────────────────────────────────────
          STREAM CONFIG
@@ -718,7 +718,7 @@
         setupSearchAndFilter();
 
         try {
-          const response = await fetch(`${API_BASE}/`, {
+          const response = await fetch(`${API_BASE}/api/content`, {
             headers: { "Accept": "application/json" }
           });
 

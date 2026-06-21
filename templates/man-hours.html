@@ -852,7 +852,7 @@
     </div>
 
     <script>
-      const API_BASE = "http://127.0.0.1:8000";
+      const API_BASE = "";
       const GOAL_HOURS = 200_000;
       const GAUGE_CIRCUMFERENCE = 2 * Math.PI * 86; // r=86
 
@@ -895,7 +895,7 @@
 
       async function init() {
         try {
-          const response = await fetch(`${API_BASE}/`, {
+          const response = await fetch(`${API_BASE}/api/content`, {
             headers: { Accept: "application/json" },
           });
           if (!response.ok)

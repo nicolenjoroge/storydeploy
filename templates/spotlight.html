@@ -610,7 +610,7 @@
 ───────────────────────────────────────────────────────────── */
       async function init() {
         try {
-          const response = await fetch(`${API_BASE}/`, { headers: { Accept: "application/json" } });
+          const response = await fetch(`${API_BASE}/api/content`, { headers: { Accept: "application/json" } });
           if (!response.ok) throw new Error(`API returned ${response.status} ${response.statusText}`);
           const data = await response.json();
 

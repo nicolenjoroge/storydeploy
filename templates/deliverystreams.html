@@ -981,7 +981,7 @@
 
       async function loadData() {
         try {
-          const res = await fetch(`${API_BASE}/`);
+          const res = await fetch(`${API_BASE}/api/content`);
           const data = await res.json();
 
           STATE = data;
