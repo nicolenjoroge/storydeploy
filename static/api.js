@@ -8,7 +8,7 @@ export async function loadData() {
   if (bar) bar.style.width = "40%";
 
   try {
-    const res = await fetch(`${API_BASE}/`);
+    const res = await fetch(`${API_BASE}/api/content`);
     if (bar) bar.style.width = "80%";
 
     const data = await res.json();
