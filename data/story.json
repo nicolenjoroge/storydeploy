@@ -27,13 +27,22 @@
       "man_hours_saved": 200000,
       "cost_savings_identified_kes": 47000000,
       "cost_savings_realized_kes": 6800000,
-      "deployed_initiatives": 27,
+      "deployed_initiatives": 29,
       "current_cost_savings": 3200000,
-      "current_man_hours_saved": 6876
+      "current_man_hours_saved": 6876,
+      "reviewed": 286,
+      "adopted": 186,
+      "dropped": 100
     },
     "closing": "From ideas to outcomes - REA is driving real impact across NCBA."
   },
   "section_3": {
+    "delivery_streams": {
+      "ai": 34,
+      "rpa_power": 58,
+      "ibps_docu": 41,
+      "enterprise": 38
+    },
     "initiatives": [
       {
         "name": "NCBA Automation Center",
@@ -47,7 +56,7 @@
             "value": 30
           }
         ],
-        "image": "/stream/71b9b3a6af9348f98d708faf488a3f71.png"
+        "image": "http://127.0.0.1:8000/stream/71b9b3a6af9348f98d708faf488a3f71.png"
       },
       {
         "name": "Document Approval",
@@ -61,7 +70,7 @@
             "value": 0
           }
         ],
-        "image": "/stream/af28ca2fd9c64cab82f5f7d111af316d.png"
+        "image": "http://127.0.0.1:8000/stream/af28ca2fd9c64cab82f5f7d111af316d.png"
       },
       {
         "name": "Rate My Service",
@@ -75,21 +84,21 @@
             "value": 0
           }
         ],
-        "image": "/stream/279bcc60e88549bea4e836356f632a4a.jpg"
+        "image": "http://127.0.0.1:8000/stream/279bcc60e88549bea4e836356f632a4a.jpg"
       },
       {
         "name": "Branch Snapcheck",
         "business_area": "Branch",
         "solution_type": "RPA",
         "category": "",
-        "description": "The Branch Snapcheck is a surprise control exercise carried out by independent staff to ensure objectivity. It is designed to identify and address operational gaps within branches, strengthening oversight and compliance.\nThe proposed automation streamlines these checks by enabling centralized assignment, tracking, and validation. With features like exception tracking, report templates, and a holistic view of branch controls, it enhances efficiency while reinforcing the bank's control environment.",
+        "description": "The Branch Snapcheck is a surprise control exercise carried out by independent staff to ensure objectivity. It is designed to identify and address operational gaps within branches, strengthening oversight and compliance.\nThe proposed automation streamlines these checks by enabling centralized assignment, tracking, and validation. With features like exception tracking, report templates, and a holistic view of branch controls, it enhances efficiency while reinforcing the bank\u2019s control environment.",
         "tangible_benefits": [
           {
             "type": "man_hours",
             "value": 90865
           }
         ],
-        "image": "/stream/64f1d4a904b24916adfeb39ed0afed4b.png"
+        "image": "http://127.0.0.1:8000/stream/64f1d4a904b24916adfeb39ed0afed4b.png"
       },
       {
         "name": "Merchandise Hub",
@@ -103,21 +112,21 @@
             "value": 2288
           }
         ],
-        "image": "/stream/01e633db9056463694153e469ba975ab.png"
+        "image": "http://127.0.0.1:8000/stream/01e633db9056463694153e469ba975ab.png"
       },
       {
         "name": "Visitor Management App",
         "business_area": "BPM",
         "solution_type": "Power Apps",
         "category": "",
-        "description": "The app is an automated solution developed to replace manual paper-based visitor records at NCBA premises. It provides a secure, centralized way to register and monitor visitors, reducing the risks associated with physical logs.\nBuilt on Microsoft's Power Platform, the app streamlines visitor tracking by digitizing records, lowering paper costs, and enhancing data protection. It enables real-time monitoring of visitor activity, ensuring both efficiency and stronger security controls.",
+        "description": "The app is an automated solution developed to replace manual paper-based visitor records at NCBA premises. It provides a secure, centralized way to register and monitor visitors, reducing the risks associated with physical logs.\nBuilt on Microsoft\u2019s Power Platform, the app streamlines visitor tracking by digitizing records, lowering paper costs, and enhancing data protection. It enables real-time monitoring of visitor activity, ensuring both efficiency and stronger security controls.",
         "tangible_benefits": [
           {
             "type": "cost_savings_kes",
             "value": 72000
           }
         ],
-        "image": "/stream/523a741268d54629acec016885c4ecb1.png"
+        "image": "http://127.0.0.1:8000/stream/523a741268d54629acec016885c4ecb1.png"
       },
       {
         "name": "HR Onboarding Bot",
@@ -131,7 +140,7 @@
             "value": 1056
           }
         ],
-        "image": "/stream/c4bed0392085475896772903fc7761ef.png"
+        "image": "http://127.0.0.1:8000/stream/c4bed0392085475896772903fc7761ef.png"
       },
       {
         "name": "Daily Excesses RPA Bot",
@@ -145,7 +154,7 @@
             "value": 0
           }
         ],
-        "image": "/stream/922bbedc259346d78350072643b157d1.png"
+        "image": "http://127.0.0.1:8000/stream/922bbedc259346d78350072643b157d1.png"
       },
       {
         "name": "EVA",
@@ -159,14 +168,14 @@
             "value": 3300
           }
         ],
-        "image": "/stream/6a26ca69582b4272a2a3171cfa516d32.png"
+        "image": "http://127.0.0.1:8000/stream/6a26ca69582b4272a2a3171cfa516d32.png"
       },
       {
         "name": "Docusign Integration for Staff",
         "business_area": "NCBA",
         "solution_type": "RPA",
         "category": "",
-        "description": "DocuSign Integration for staff is a digital solution that replaces manual, paper-based document signing with a secure, centralized electronic platform. It acts as a single hub where staff can create, send, track, and manage documents requiring signatures from both internal and external parties, ensuring easier access, visibility, and future reference.\nThe solution enables staff to send and sign documents anytime and from anywhere, while securely verifying signers' identities without the need for physical presence. It streamlines workflows by reducing turnaround time, lowers operational costs linked to paper and printing, and automatically generates audit trails and legally admissible records, improving efficiency, compliance, and overall service delivery.",
+        "description": "DocuSign Integration for staff is a digital solution that replaces manual, paper-based document signing with a secure, centralized electronic platform. It acts as a single hub where staff can create, send, track, and manage documents requiring signatures from both internal and external parties, ensuring easier access, visibility, and future reference.\nThe solution enables staff to send and sign documents anytime and from anywhere, while securely verifying signers\u2019 identities without the need for physical presence. It streamlines workflows by reducing turnaround time, lowers operational costs linked to paper and printing, and automatically generates audit trails and legally admissible records, improving efficiency, compliance, and overall service delivery.",
         "tangible_benefits": [
           {
             "type": "man_hours",
@@ -181,7 +190,7 @@
             "value": 85.36
           }
         ],
-        "image": "/stream/d6eb62537f1f47ff95a5efa297e8bfcf.png"
+        "image": "http://127.0.0.1:8000/stream/d6eb62537f1f47ff95a5efa297e8bfcf.png"
       },
       {
         "name": "7 Departments supported by EVA",
@@ -195,7 +204,7 @@
             "value": 0
           }
         ],
-        "image": "/stream/3719793f7af74246810bf754f8a54b89.png"
+        "image": "http://127.0.0.1:8000/stream/3719793f7af74246810bf754f8a54b89.png"
       },
       {
         "name": "Contact Center Quality Management Tool",
@@ -209,7 +218,7 @@
             "value": 3270000
           }
         ],
-        "image": "/stream/08758d49bcf643369898a7e174f47a3f.png"
+        "image": "http://127.0.0.1:8000/stream/08758d49bcf643369898a7e174f47a3f.png"
       },
       {
         "name": "Static Card Data T24",
@@ -223,10 +232,10 @@
             "value": 3270000
           }
         ],
-        "image": "/stream/30d14aeada3c4218a04d78a715e5ad32.png"
+        "image": "http://127.0.0.1:8000/stream/30d14aeada3c4218a04d78a715e5ad32.png"
       },
       {
-        "name": "Monthly Disbursement Report and Account Summary Reports in Uganda",
+        "name": "Monthly Disbursement Report and Account Summary Reports \u200b in Uganda ",
         "business_area": "Core Banking",
         "solution_type": "RPA",
         "category": "in_action",
@@ -237,7 +246,7 @@
             "value": 3270000
           }
         ],
-        "image": "/stream/0049222da91348acb1a69c232528852d.png"
+        "image": "http://127.0.0.1:8000/stream/0049222da91348acb1a69c232528852d.png"
       }
     ],
     "closing": "These initiatives represent just the beginning - more are progressing across the pipeline."
@@ -247,12 +256,12 @@
       {
         "name": "EVA AI Digital Assistant",
         "description": "An AI-powered assistant that centralizes policies, procedures, and knowledge into one intelligent interface for instant access.",
-        "video": "/stream/69fd221813a2423a8b47e3d3c6aa2201.mp4"
+        "video": "http://127.0.0.1:8000/stream/69fd221813a2423a8b47e3d3c6aa2201.mp4"
       },
       {
         "name": "MARA",
         "description": "Multiple Agents, One Mission",
-        "video": "/stream/71935725f17f4fb580d3bac1f03c3523.mp4"
+        "video": "http://127.0.0.1:8000/stream/71935725f17f4fb580d3bac1f03c3523.mp4"
       }
     ]
   },
@@ -260,7 +269,7 @@
     "items": [
       {
         "name": "Automated Statements",
-        "description": "The Statement Printing Portal enables customers to receive their account statements instantly in a secure, digital, and paperless format. By incorporating QR verification and digital certification, each statement is authenticated and can be easily verified when shared with third parties.\nThis solution significantly reduces turnaround time, eliminates reliance on physical printing, and minimizes manual intervention. It also supports the bank's broader sustainability agenda by reducing paper usage and operational costs.",
+        "description": "The Statement Printing Portal enables customers to receive their account statements instantly in a secure, digital, and paperless format. By incorporating QR verification and digital certification, each statement is authenticated and can be easily verified when shared with third parties.\nThis solution significantly reduces turnaround time, eliminates reliance on physical printing, and minimizes manual intervention. It also supports the bank\u2019s broader sustainability agenda by reducing paper usage and operational costs.",
         "benefits": [
           "Faster delivery",
           "Secure verification",
@@ -269,7 +278,7 @@
       },
       {
         "name": "Instant Statements on NCBA Now",
-        "description": "Customers can now generate their account statements instantly through NCBA Now, offering a faster and more convenient alternative to traditional request channels. There is no need to visit a branch or wait for manual processing.\nThis enhancement improves customer experience by putting control directly in the customer's hands, while also improving internal efficiency.",
+        "description": "Customers can now generate their account statements instantly through NCBA Now, offering a faster and more convenient alternative to traditional request channels. There is no need to visit a branch or wait for manual processing.\nThis enhancement improves customer experience by putting control directly in the customer\u2019s hands, while also improving internal efficiency.\n          ",
         "benefits": [
           "Immediate access",
           "Reduced operational workload",
@@ -278,7 +287,7 @@
       },
       {
         "name": "Account Dormancy Rules Updated",
-        "description": "The dormancy period for accounts has been extended from 3 months to 18 months, allowing customers to keep their accounts active for longer without frequent transactions.\nThis change reduces customer inconvenience, limits unnecessary account restrictions, and improves the overall account management experience.",
+        "description": "The dormancy period for accounts has been extended from 3 months to 18 months, allowing customers to keep their accounts active for longer without frequent transactions.\nThis change reduces customer inconvenience, limits unnecessary account restrictions, and improves the overall account management experience.\n          ",
         "benefits": [
           "Accounts stay active longer",
           "Simplified reactivation",
@@ -287,7 +296,7 @@
       },
       {
         "name": "Contact Centre Quality Management Tool",
-        "description": "The Contact Centre Quality Management solution has been transitioned to an in-house Power App, replacing reliance on external systems. This allows for better control, customization, and cost efficiency.\nThis initiative strengthens internal capabilities, enhances visibility into service performance, and ensures a more consistent and high-quality customer experience.",
+        "description": "The Contact Centre Quality Management solution has been transitioned to an in-house Power App, replacing reliance on external systems. This allows for better control, customization, and cost efficiency.\nThis initiative strengthens internal capabilities, enhances visibility into service performance, and ensures a more consistent and high-quality customer experience.\n          ",
         "benefits": [
           "KES 3.27M cost savings",
           "Centralized quality management",

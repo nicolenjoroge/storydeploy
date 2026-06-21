@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ideas Journey · REA Pipeline · NCBA Group</title>
+    <style>
+      /* ─────────────────────────────────────────────────────────────
+   TOKENS — matches main StoryHub site exactly
+───────────────────────────────────────────────────────────── */
+      :root {
+        --cocoa: #39302d;
+        --cocoa-light: #5a4a45;
+        --sky: #3ab3e5;
+        --sky-dim: rgba(58, 179, 229, 0.15);
+        --coral: #e4032c;
+        --coral-dim: rgba(228, 3, 44, 0.08);
+        --sun: #f8e200;
+        --passion: #9f197e;
+        --passion-dim: rgba(159, 25, 126, 0.1);
+        --med: #00a8a9;
+        --med-dim: rgba(0, 168, 169, 0.12);
+        --white: #ffffff;
+        --off-white: #f7f5f3;
+        --border: rgba(57, 48, 45, 0.1);
+        --border-light: rgba(255, 255, 255, 0.12);
+        --radius: 12px;
+        --radius-lg: 20px;
+        --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--off-white);
+        color: var(--cocoa);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      button {
+        cursor: pointer;
+        font-family: inherit;
+        border: none;
+        background: none;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   TOP BAR / BACK NAV
+───────────────────────────────────────────────────────────── */
+      #page-nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(57, 48, 45, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-light);
+      }
+      .page-nav-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 28px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .back-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7);
+        transition: color 0.2s;
+      }
+      .back-link:hover {
+        color: var(--sky);
+      }
+      .back-link svg {
+        flex-shrink: 0;
+      }
+      .page-nav-title {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.35);
+        margin-left: 4px;
+        padding-left: 14px;
+        border-left: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   JOURNEY TRAIL — shows where this page sits in the story
+───────────────────────────────────────────────────────────── */
+      .journey-trail {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 22px 28px 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .trail-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: rgba(57, 48, 45, 0.4);
+        transition: color 0.2s;
+      }
+      .trail-step.is-link {
+        cursor: pointer;
+      }
+      .trail-step.is-link:hover {
+        color: var(--cocoa);
+      }
+      .trail-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(57, 48, 45, 0.25);
+        flex-shrink: 0;
+        transition: var(--transition);
+      }
+      .trail-step.is-done .trail-dot {
+        background: var(--med);
+      }
+      .trail-step.is-current {
+        color: var(--cocoa);
+      }
+      .trail-step.is-current .trail-dot {
+        background: var(--sky);
+        box-shadow: 0 0 0 4px var(--sky-dim);
+      }
+      .trail-line {
+        width: 34px;
+        height: 1px;
+        background: rgba(57, 48, 45, 0.18);
+        margin: 0 12px;
+        flex-shrink: 0;
+      }
+      .trail-line.is-future {
+        background-image: linear-gradient(
+          to right,
+          rgba(57, 48, 45, 0.25) 0,
+          rgba(57, 48, 45, 0.25) 4px,
+          transparent 4px,
+          transparent 8px
+        );
+        background-size: 8px 1px;
+        background-repeat: repeat-x;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   PAGE HEADER
+───────────────────────────────────────────────────────────── */
+      .page-header {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 56px 28px 8px;
+      }
+      .page-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--med);
+        margin-bottom: 10px;
+      }
+      .page-title {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--cocoa);
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+      }
+      .page-title em {
+        font-style: normal;
+        color: var(--passion);
+      }
+      .page-sub {
+        font-size: 15px;
+        color: rgba(57, 48, 45, 0.62);
+        max-width: 620px;
+        line-height: 1.7;
+      }
+      .sun-rule {
+        width: 40px;
+        height: 3px;
+        background: var(--sun);
+        border-radius: 2px;
+        margin: 18px 0 0;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   CONTAINER
+───────────────────────────────────────────────────────────── */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 28px 100px;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   PIPELINE CARD (collapsed state)
+───────────────────────────────────────────────────────────── */
+      .pipeline-card-wrap {
+        margin-top: 40px;
+      }
+      .pipeline-card {
+        position: relative;
+        background: var(--cocoa);
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 28px 28px 36px;
+        cursor: pointer;
+        overflow: hidden;
+        transition:
+          transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+          box-shadow 0.3s ease;
+        box-shadow: 0 20px 50px rgba(57, 48, 45, 0.18);
+      }
+      .pipeline-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 28px 64px rgba(57, 48, 45, 0.24);
+      }
+      .pipeline-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 12% 8%,
+            rgba(58, 179, 229, 0.1),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 88% 85%,
+            rgba(159, 25, 126, 0.08),
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+      .pipeline-card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 6px;
+        position: relative;
+        z-index: 1;
+      }
+      .pipeline-card-head-text {
+        flex: 1;
+      }
+      .pipeline-card-eyebrow {
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--sky);
+        margin-bottom: 6px;
+      }
+      .pipeline-card-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.01em;
+      }
+      .expand-affordance {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.6);
+        transition:
+          background 0.25s,
+          color 0.25s,
+          transform 0.25s;
+      }
+      .pipeline-card:hover .expand-affordance {
+        background: var(--sky);
+        color: #0b1a20;
+        transform: scale(1.06);
+      }
+
+      /* mini tree preview inside collapsed card */
+      .tree-stage {
+        position: relative;
+        z-index: 1;
+        margin-top: 28px;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   TREE STRUCTURE (shared between collapsed + expanded)
+───────────────────────────────────────────────────────────── */
+      .tree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+      .tree-level {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        position: relative;
+        width: 100%;
+      }
+      .tree-connector {
+        width: 1px;
+        background: rgba(255, 255, 255, 0.18);
+        margin: 0 auto;
+      }
+      .tree-connector.h-sm {
+        height: 22px;
+      }
+      .tree-connector.h-lg {
+        height: 30px;
+      }
+
+      /* horizontal bracket connecting children under a parent */
+      .tree-bracket {
+        position: relative;
+        height: 22px;
+        width: 100%;
+      }
+      .tree-bracket svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .tree-node {
+        position: relative;
+        border-radius: 16px;
+        padding: 16px 22px;
+        min-width: 132px;
+        text-align: center;
+        background: linear-gradient(
+          155deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.025)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(10px);
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          background 0.25s ease;
+      }
+      .tree-node:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      .tree-node-val {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .tree-node-label {
+        font-size: 10.5px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: rgba(255, 255, 255, 0.55);
+        margin-top: 6px;
+      }
+
+      /* node accent rims per stage */
+      .node-root {
+        border-top: 2px solid var(--sun);
+      }
+      .node-reviewed {
+        border-top: 2px solid var(--sky);
+      }
+      .node-adopted {
+        border-top: 2px solid var(--med);
+      }
+      .node-dropped {
+        border-top: 2px solid var(--coral);
+      }
+      .node-initiatives {
+        border-top: 2px solid var(--passion);
+      }
+
+      .node-root .tree-node-val {
+        color: var(--sun);
+      }
+      .node-adopted .tree-node-val {
+        color: var(--med);
+      }
+      .node-dropped .tree-node-val {
+        color: var(--coral);
+      }
+      .node-initiatives .tree-node-val {
+        color: var(--passion);
+      }
+
+      /* dropped node sits slightly faded/sideways to read as "exit" branch */
+      .node-dropped {
+        opacity: 0.82;
+      }
+
+      /* small scale for collapsed preview */
+      .tree--compact .tree-node {
+        padding: 10px 14px;
+        min-width: 92px;
+        border-radius: 12px;
+      }
+      .tree--compact .tree-node-val {
+        font-size: 17px;
+      }
+      .tree--compact .tree-node-label {
+        font-size: 8.5px;
+      }
+      .tree--compact .tree-connector.h-sm {
+        height: 14px;
+      }
+      .tree--compact .tree-connector.h-lg {
+        height: 18px;
+      }
+      .tree--compact .tree-bracket {
+        height: 14px;
+      }
+      .tree--compact .tree-level {
+        gap: 10px;
+      }
+
+      .tap-hint {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-size: 11.5px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.35);
+        position: relative;
+        z-index: 1;
+      }
+      .tap-hint svg {
+        flex-shrink: 0;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   EXPANDED OVERLAY (fullscreen)
+───────────────────────────────────────────────────────────── */
+      .pipeline-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: var(--cocoa);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .pipeline-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .pipeline-overlay::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 15% 10%,
+            rgba(58, 179, 229, 0.09),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% 90%,
+            rgba(159, 25, 126, 0.08),
+            transparent 50%
+          );
+        pointer-events: none;
+      }
+      .overlay-topbar {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-shrink: 0;
+      }
+      .overlay-title-block .pipeline-card-eyebrow {
+        margin-bottom: 4px;
+      }
+      .overlay-title-block .pipeline-card-title {
+        font-size: 21px;
+      }
+      .overlay-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .overlay-close:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: scale(1.06);
+      }
+
+      .overlay-tree-stage {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px 56px;
+        overflow: auto;
+      }
+
+      /* expanded tree sizing — generous, breathing room */
+      .tree--full .tree-node {
+        min-width: 168px;
+        padding: 22px 26px;
+        border-radius: 18px;
+      }
+      .tree--full .tree-node-val {
+        font-size: 32px;
+      }
+      .tree--full .tree-node-label {
+        font-size: 11.5px;
+      }
+      .tree--full .tree-level {
+        gap: 28px;
+      }
+      .tree--full .tree-connector.h-sm {
+        height: 30px;
+      }
+      .tree--full .tree-connector.h-lg {
+        height: 40px;
+      }
+      .tree--full .tree-bracket {
+        height: 30px;
+      }
+
+      .tree--full .node-root {
+        min-width: 200px;
+      }
+      .tree--full .node-root .tree-node-val {
+        font-size: 40px;
+      }
+
+      /* connecting line from "Adopted" down to "BPM Initiatives" subtree */
+      .tree-subtree-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        text-align: center;
+        margin-top: 4px;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   JOURNEY PAGER — horizontal prev / next at the foot of the page
+───────────────────────────────────────────────────────────── */
+      .journey-pager {
+        max-width: 1280px;
+        margin: 48px auto 0;
+        padding: 0 28px;
+        display: flex;
+        align-items: stretch;
+        gap: 16px;
+      }
+      .pager-link {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 22px;
+        border-radius: var(--radius);
+        background: var(--white);
+        border: 1px solid var(--border);
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .pager-link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(58, 179, 229, 0.4);
+        box-shadow: 0 14px 30px rgba(57, 48, 45, 0.1);
+      }
+      .pager-link.is-next {
+        justify-content: flex-end;
+        text-align: right;
+        flex-direction: row-reverse;
+      }
+      .pager-link.is-disabled {
+        opacity: 0.55;
+        cursor: default;
+        pointer-events: none;
+      }
+      .pager-arrow {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--off-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cocoa);
+      }
+      .pager-text-eyebrow {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(57, 48, 45, 0.45);
+        margin-bottom: 3px;
+      }
+      .pager-text-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--cocoa);
+      }
+      /* ─────────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────────── */
+      @media (max-width: 760px) {
+        .tree-level {
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .tree--full .tree-level {
+          gap: 14px;
+        }
+        .tree--full .tree-node {
+          min-width: 120px;
+          padding: 16px 16px;
+        }
+        .tree--full .tree-node-val {
+          font-size: 22px;
+        }
+        .tree--full .node-root .tree-node-val {
+          font-size: 28px;
+        }
+        .overlay-tree-stage {
+          padding: 24px 12px 40px;
+        }
+        .pipeline-card {
+          padding: 22px 18px 28px;
+        }
+      }
+      @media (max-width: 480px) {
+        .tree-node {
+          min-width: 78px;
+          padding: 10px 10px;
+        }
+        .tree--compact .tree-node {
+          min-width: 70px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pipeline-card,
+        .glass-card,
+        .tree-node,
+        .pipeline-overlay {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── TOP NAV ── -->
+    <nav id="page-nav" aria-label="Page navigation">
+      <div class="page-nav-inner">
+        <a href="/" class="back-link">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M10 12.5L5.5 8l4.5-4.5"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to StoryHub
+        </a>
+        <span class="page-nav-title">Ideas Journey</span>
+      </div>
+    </nav>
+
+        <!-- ── JOURNEY TRAIL ── -->
+    <div class="journey-trail" aria-label="Story progress">
+      <a href="/ideas-journey" class="trail-step is-done is-link">
+      <span class="trail-step is-current">
+        <span class="trail-dot"></span>
+        Ideas Journey
+      </a>
+      <a href="/deliverystreams" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step ">
+        <span class="trail-dot"></span>
+        Delivery Streams
+      </a>
+      <a href="/deployed" class="trail-step is-done is-link">
+      <span class="trail-line is-future"></span>
+      <span class="trail-step">
+        <span class="trail-dot"></span>
+        Deployed
+      </span></a>
+      <a href="/cost-savings" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step ">
+        <span class="trail-dot"></span>
+        Cost Savings
+      </a>
+      <a href="/man-hours" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step ">
+        <span class="trail-dot"></span>
+        Man Hours
+      </a>
+    </div>
+
+
+    <!-- ── PAGE HEADER ── -->
+    <header class="page-header">
+      <p class="page-eyebrow">Ideas Journey</p>
+      <h1 class="page-title">From submission to <em>impact</em></h1>
+      <p class="page-sub">
+        A look at how ideas move through the REA programme — from the moment
+        they're submitted, through review, to becoming live BPM initiatives
+        across NCBA.
+      </p>
+      <div class="sun-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="container">
+      <!-- ══════════════════════════════════════════════════════
+       REA PIPELINE CARD (click to expand)
+  ══════════════════════════════════════════════════════ -->
+      <div class="pipeline-card-wrap">
+        <div
+          class="pipeline-card"
+          id="pipeline-card"
+          role="button"
+          tabindex="0"
+          aria-label="REA Pipeline — click to expand"
+          aria-expanded="false"
+        >
+          <div class="pipeline-card-head">
+            <div class="pipeline-card-head-text">
+              <p class="pipeline-card-eyebrow">REA Pipeline</p>
+              <h2 class="pipeline-card-title">Idea flow, end to end</h2>
+            </div>
+            <div class="expand-affordance" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div class="tree-stage">
+            <div class="tree tree--compact" id="tree-compact"></div>
+          </div>
+
+          <div class="tap-hint">
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Tap to expand
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+       JOURNEY PAGER — continue the story horizontally
+  ══════════════════════════════════════════════════════ -->
+      <div class="journey-pager">
+        <a href="/" class="pager-link is-prev">
+          <span class="pager-arrow">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M10 12.5L5.5 8l4.5-4.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span>
+            <p class="pager-text-eyebrow">Back to Home</p>
+            <p class="pager-text-title">Home Page</p>
+          </span>
+        </a>
+        <a href="/deliverystreams" class="pager-link is-next" aria-disabled="true">
+          <span class="pager-arrow">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M6 3.5L10.5 8 6 12.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span>
+            <p class="pager-text-eyebrow">Next</p>
+            <p class="pager-text-title">Delivery Streams</p>
+          </span>
+        </a>
+      </div>
+    </div>
+    <!-- ══════════════════════════════════════════════════════
+     FULLSCREEN EXPANDED OVERLAY
+══════════════════════════════════════════════════════ -->
+    <div
+      class="pipeline-overlay"
+      id="pipeline-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="REA Pipeline expanded view"
+    >
+      <div class="overlay-topbar">
+        <div class="overlay-title-block">
+          <p class="pipeline-card-eyebrow">REA Pipeline</p>
+          <h2 class="pipeline-card-title">Idea flow, end to end</h2>
+        </div>
+        <button
+          class="overlay-close"
+          id="overlay-close-btn"
+          aria-label="Close expanded view"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="overlay-tree-stage">
+        <div class="tree tree--full" id="tree-full"></div>
+      </div>
+    </div>
+
+    <script>
+      let STATE = {};
+
+      const API_BASE = window.STORYHUB_API_BASE || "http://127.0.0.1:8000";
+
+      async function loadData(){
+        try {
+        const res = await fetch(`${API_BASE}/`)
+        const data = await res.json();
+
+        // console.log(data);
+
+        STATE = data;
+
+        // console.log(STATE);
+
+        } catch(err){
+          console.log("Error Fetching data, Please try again later", err);
+        }
+        
+      }
+
+      function section(key) {
+        return STATE[key];
+      }
+
+
+      /* ─────────────────────────────────────────────────────────────
+   STATIC PIPELINE DATA
+   (Submitted comes from CMS metrics in production; reviewed /
+    adopted / dropped are illustrative static figures for now)
+───────────────────────────────────────────────────────────── */
+      // const PIPELINE = {
+      //   submitted: 286,
+      //   reviewed: 240,
+      //   adopted: 171,
+      //   dropped: 69,
+      //   initiatives: 171, // BPM Initiatives realized from adopted ideas
+      // };
+
+      /* ─────────────────────────────────────────────────────────────
+   TREE TEMPLATE BUILDER
+   Builds: Submitted -> Reviewed -> [Adopted, Dropped]
+                                       Adopted -> BPM Initiatives
+───────────────────────────────────────────────────────────── */
+      function buildTree(data) {    
+        return `
+    <!-- Level 1: Submitted (root) -->
+    <div class="tree-level">
+      <div class="tree-node node-root">
+        <div class="tree-node-val">${data.submitted}</div>
+        <div class="tree-node-label">Ideas Submitted</div>
+      </div>
+    </div>
+
+    <div class="tree-connector h-sm"></div>
+
+    <!-- Level 2: Reviewed -->
+    <div class="tree-level">
+      <div class="tree-node node-reviewed">
+        <div class="tree-node-val">${data.reviewed}</div>
+        <div class="tree-node-label">Reviewed</div>
+      </div>
+    </div>
+
+    <div class="tree-bracket" aria-hidden="true">
+      <svg viewBox="0 0 200 30" preserveAspectRatio="none">
+        <path d="M100,0 L100,10 M30,10 L170,10 M30,10 L30,28 M170,10 L170,28"
+              stroke="rgba(255,255,255,.18)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Level 3: Adopted + Dropped -->
+    <div class="tree-level">
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div class="tree-node node-adopted">
+          <div class="tree-node-val">${data.adopted}</div>
+          <div class="tree-node-label">Adopted</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center;">
+        <div class="tree-node node-dropped">
+          <div class="tree-node-val">${data.dropped}</div>
+          <div class="tree-node-label">Dropped</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connector down from Adopted only -->
+    <div style="display:flex; width:100%; justify-content:center;">
+      <div style="width:50%; display:flex; justify-content:center;">
+        <div class="tree-connector h-lg"></div>
+      </div>
+      <div style="width:50%;"></div>
+    </div>
+
+    <!-- Level 4: BPM Initiatives (child of Adopted) -->
+    <div class="tree-level" style="justify-content:flex-start;">
+      <div style="width:50%; display:flex; flex-direction:column; align-items:center;">
+        <div class="tree-node node-initiatives">
+          <div class="tree-node-val">${data.bpm_initiatives}</div>
+          <div class="tree-node-label">BPM Initiatives</div>
+        </div>
+        <div class="tree-subtree-label">Realized from adopted ideas</div>
+      </div>
+      <div style="width:50%;"></div>
+    </div>
+  `;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   RENDER
+───────────────────────────────────────────────────────────── */
+      function renderTrees() {
+      const s2 = STATE.section_2;
+      console.log(s2);
+      
+      const metrics = s2.metrics || {};
+
+      const PIPELINE = {
+        submitted: metrics.ideas_submitted,
+        reviewed: metrics.reviewed,
+        adopted: metrics.adopted,
+        dropped: metrics.dropped,
+        bpm_initiatives: metrics.ideas_in_pipeline,     
+      };
+
+        document.getElementById("tree-compact").innerHTML = buildTree(PIPELINE);
+        document.getElementById("tree-full").innerHTML = buildTree(PIPELINE);
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   EXPAND / COLLAPSE INTERACTION
+───────────────────────────────────────────────────────────── */
+      function setupExpand() {
+        const card = document.getElementById("pipeline-card");
+        const overlay = document.getElementById("pipeline-overlay");
+        const closeBtn = document.getElementById("overlay-close-btn");
+
+        function open() {
+          overlay.classList.add("open");
+          card.setAttribute("aria-expanded", "true");
+          document.body.style.overflow = "hidden";
+        }
+        function close() {
+          overlay.classList.remove("open");
+          card.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+        }
+
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            open();
+          }
+        });
+
+        closeBtn.addEventListener("click", close);
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) close();
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && overlay.classList.contains("open")) close();
+        });
+      }
+
+
+      /* ─────────────────────────────────────────────────────────────
+   BOOT
+───────────────────────────────────────────────────────────── */
+      async function boot(){
+        await loadData();
+        renderTrees();
+        setupExpand();
+      }
+      boot();
+    </script>
+  </body>
+</html>

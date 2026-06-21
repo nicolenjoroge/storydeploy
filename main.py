@@ -1,7 +1,6 @@
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request, Response
 import json
-from fastapi.middleware.cors import CORSMiddleware
 import os, uuid
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse, FileResponse
@@ -12,16 +11,6 @@ import gc
 
 app = FastAPI()
 
-
-
-# ✅ CORS
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-#     allow_headers=["*"]
-# )
 
 # Serve frontend assets (CSS/JS/images)
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -69,8 +58,33 @@ def home():
     return FileResponse("templates/index.html")
 
 @app.get("/cmsportal")
-def page2():
+def cmsportal():
     return FileResponse("templates/cmsportal.html")
+
+@app.get("/ideas-journey")
+def ideas_journey():
+    return FileResponse("templates/ideas-journey.html")
+
+@app.get("/spotlight")
+def spotlight():
+    return FileResponse("templates/spotlight.html")
+
+@app.get("/cost-savings")
+def cost_savings():
+    return FileResponse("templates/cost-savings.html")
+
+@app.get("/deliverystreams")
+def deliverystreams():
+    return FileResponse("templates/deliverystreams.html")
+
+@app.get("/deployed")
+def deployed():
+    return FileResponse("templates/deployed.html")
+
+@app.get("/man-hours")
+def man_hours():
+    return FileResponse("templates/man-hours.html")
+
 
 # ---------------------------------------
 # ✅ GET MEDIA(IMAGES/VIDEOS)

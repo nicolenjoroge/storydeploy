@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotlight · Deployed Initiative · NCBA Group</title>
+    <style>
+      /* ═════════════════════════════════════════════════════════════
+   TOKENS — same brand system as the rest of StoryHub
+═════════════════════════════════════════════════════════════ */
+      :root {
+        --cocoa: #39302d;
+        --cocoa-light: #5a4a45;
+        --sky: #3ab3e5;
+        --sky-dim: rgba(58, 179, 229, 0.15);
+        --coral: #e4032c;
+        --coral-dim: rgba(228, 3, 44, 0.08);
+        --sun: #f8e200;
+        --passion: #9f197e;
+        --passion-dim: rgba(159, 25, 126, 0.1);
+        --med: #00a8a9;
+        --med-dim: rgba(0, 168, 169, 0.12);
+        --white: #ffffff;
+        --off-white: #f7f5f3;
+        --border: rgba(57, 48, 45, 0.1);
+        --border-light: rgba(255, 255, 255, 0.12);
+        --radius: 12px;
+        --radius-lg: 20px;
+        --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { font-size: 16px; }
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: var(--cocoa);
+        color: #fff;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      button { cursor: pointer; font-family: inherit; border: none; background: none; }
+      a { color: inherit; text-decoration: none; }
+
+      /* ═════════════════════════════════════════════════════════════
+   TOP NAV — fixed, fades in once the scroll story begins
+═════════════════════════════════════════════════════════════ */
+      #page-nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        background: rgba(57, 48, 45, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-light);
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
+      }
+      #page-nav.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+      .page-nav-inner {
+        max-width: 1280px; margin: 0 auto; padding: 0 28px;
+        height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      }
+      .back-link {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s;
+      }
+      .back-link:hover { color: var(--sky); }
+      .nav-progress-label {
+        font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+        color: rgba(255,255,255,0.4);
+      }
+
+      /* progress rail */
+      .scroll-rail {
+        position: fixed;
+        bottom: 28px; left: 50%; transform: translateX(-50%);
+        z-index: 100;
+        display: flex; align-items: center; gap: 8px;
+        padding: 10px 14px;
+        border-radius: 30px;
+        background: rgba(0,0,0,0.28);
+        border: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(8px);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .scroll-rail.is-visible { opacity: 1; }
+      .rail-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .rail-dot.is-active { background: var(--sky); transform: scale(1.4); }
+      .rail-hint {
+        font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+        color: rgba(255,255,255,0.4); margin-left: 4px;
+      }
+
+      /* ═════════════════════════════════════════════════════════════
+   COLD-OPEN INTRO
+═════════════════════════════════════════════════════════════ */
+      .intro {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 8vw;
+        overflow: hidden;
+      }
+      .intro::before {
+        content: "";
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 18% 20%, rgba(58,179,229,0.14), transparent 45%),
+          radial-gradient(circle at 85% 80%, rgba(159,25,126,0.12), transparent 50%);
+        pointer-events: none;
+      }
+      .intro-eyebrow {
+        position: relative; z-index: 1;
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--sun); margin-bottom: 22px;
+      }
+      .intro-eyebrow::before { content: "★"; font-size: 12px; }
+      .intro-title {
+        position: relative; z-index: 1;
+        font-size: clamp(34px, 6.4vw, 76px);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        max-width: 980px;
+      }
+      .intro-title em { font-style: normal; color: var(--sky); }
+      .intro-sub {
+        position: relative; z-index: 1;
+        font-size: 16px;
+        color: rgba(255,255,255,0.6);
+        max-width: 560px;
+        margin-top: 22px;
+        line-height: 1.7;
+      }
+      .intro-meta-row {
+        position: relative; z-index: 1;
+        display: flex; gap: 10px; flex-wrap: wrap;
+        margin-top: 24px;
+      }
+      .intro-chip {
+        font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+        padding: 6px 13px; border-radius: 20px;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+        color: rgba(255,255,255,0.7);
+      }
+      .intro-scrollcue {
+        position: relative; z-index: 1;
+        display: flex; align-items: center; gap: 10px;
+        margin-top: 56px;
+        font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255,255,255,0.4);
+      }
+      .intro-scrollcue .arrow { animation: bob 1.6s ease-in-out infinite; }
+      @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(6px); }
+      }
+
+      /* skeleton shimmer for loading state */
+      .skel {
+        background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 37%, rgba(255,255,255,0.06) 63%);
+        background-size: 400% 100%;
+        animation: shimmer 1.6s ease infinite;
+        border-radius: 8px;
+        color: transparent !important;
+      }
+      @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+      /* ═════════════════════════════════════════════════════════════
+   HORIZONTAL SCROLL STORY
+═════════════════════════════════════════════════════════════ */
+      .pin-host { position: relative; }
+      .pin-viewport {
+        position: sticky; top: 0; height: 100vh; overflow: hidden;
+        display: flex; align-items: stretch;
+      }
+      .pin-track { display: flex; height: 100%; will-change: transform; }
+      .panel {
+        flex-shrink: 0; width: 100vw; height: 100%;
+        display: flex; align-items: center; position: relative; padding: 0 8vw;
+      }
+      .panel-inner { position: relative; z-index: 1; width: 100%; }
+      .panel::after {
+        content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 1px;
+        background: rgba(255,255,255,0.06);
+      }
+
+      /* — panel 1: the problem (placeholder framing, no API before-state) — */
+      .panel-problem { background: linear-gradient(155deg, #392f2c, #2e2624); }
+      .placeholder-note {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.35);
+        margin-top: 26px; letter-spacing: 0.03em;
+      }
+      .placeholder-note::before { content: "ⓘ"; }
+
+      /* — panel 2: the solution / description — */
+      .panel-solution { background: linear-gradient(155deg, #33423f, #2a3633); }
+      .panel-eyebrow {
+        font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--med); margin-bottom: 16px;
+      }
+      .panel-heading {
+        font-size: clamp(24px, 3.4vw, 40px); font-weight: 700; letter-spacing: -0.02em;
+        max-width: 720px; margin-bottom: 20px;
+      }
+      .panel-body { font-size: 15px; color: rgba(255,255,255,0.68); max-width: 560px; line-height: 1.8; }
+      .tech-chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+      .tech-chip {
+        font-size: 11px; font-weight: 600; padding: 7px 14px; border-radius: 20px;
+        background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+        color: rgba(255,255,255,0.7);
+      }
+
+      /* — panel 3: benefits — */
+      .panel-benefits { background: linear-gradient(155deg, #36302f, #2c2725); }
+      .benefit-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+        max-width: 920px; margin-top: 30px;
+      }
+      .benefit-card {
+        padding: 24px 22px; border-radius: 16px;
+        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      }
+      .benefit-icon {
+        width: 36px; height: 36px; border-radius: 10px;
+        background: var(--sky-dim); color: var(--sky);
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 16px;
+      }
+      .benefit-val { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+      .benefit-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 6px; line-height: 1.5; }
+
+      /* — panel 4: media / in-product look (still illustrative) — */
+      .panel-media { background: linear-gradient(155deg, #2f3a42, #263038); }
+      .media-frame-row { display: flex; gap: 18px; margin-top: 30px; flex-wrap: wrap; }
+      .media-frame {
+        width: 260px; height: 320px; border-radius: 16px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+        padding: 18px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+      }
+      .media-frame-label {
+        font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+        color: rgba(255,255,255,0.35); margin-bottom: 4px;
+      }
+      .mock-bar { height: 9px; border-radius: 4px; background: rgba(255,255,255,0.08); }
+      .mock-bar.w-70 { width: 70%; }
+      .mock-bar.w-50 { width: 50%; }
+      .mock-bar.w-90 { width: 90%; }
+      .mock-score-ring {
+        width: 96px; height: 96px; border-radius: 50%; margin: 10px auto 6px;
+        background: conic-gradient(var(--sky) 0deg 296deg, rgba(255,255,255,0.08) 296deg 360deg);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .mock-score-ring-inner {
+        width: 74px; height: 74px; border-radius: 50%; background: #232024;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+      }
+      .mock-score-ring-inner .n { font-size: 18px; font-weight: 800; color: #fff; }
+      .mock-score-ring-inner .l { font-size: 8px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; }
+      .mock-chip-row { display: flex; gap: 6px; margin-top: auto; flex-wrap: wrap; }
+      .mock-chip { font-size: 9px; padding: 4px 8px; border-radius: 10px; background: rgba(58,179,229,0.16); color: var(--sky); }
+
+      /* — panel 5: close / CTA — */
+      .panel-close { background: linear-gradient(155deg, #3c2f3a, #2e242c); }
+      .close-title {
+        font-size: clamp(24px, 3.4vw, 40px); font-weight: 700; letter-spacing: -0.02em;
+        max-width: 640px; margin-bottom: 22px;
+      }
+      .close-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+      .close-cta {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 14px 26px; border-radius: 30px; font-size: 13px; font-weight: 700;
+        transition: transform 0.25s ease, background 0.25s ease;
+      }
+      .close-cta.primary { background: var(--sky); color: #0b1a20; }
+      .close-cta.primary:hover { transform: translateY(-2px); background: #57c2ec; }
+      .close-cta.ghost { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); color: #fff; }
+      .close-cta.ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.13); }
+
+      /* ═════════════════════════════════════════════════════════════
+   ERROR STATE
+═════════════════════════════════════════════════════════════ */
+      .api-error {
+        position: relative; z-index: 1;
+        max-width: 560px; padding: 22px 24px; border-radius: 14px;
+        background: rgba(228,3,44,0.08); border: 1px solid rgba(228,3,44,0.25);
+        font-size: 13.5px; color: rgba(255,255,255,0.8); margin-top: 28px;
+      }
+      .api-error button {
+        margin-top: 14px; padding: 10px 20px; border-radius: 20px;
+        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+        color: #fff; font-size: 12.5px; font-weight: 600;
+      }
+
+      /* ═════════════════════════════════════════════════════════════
+   RESPONSIVE — vertical fallback on touch / narrow
+═════════════════════════════════════════════════════════════ */
+      @media (max-width: 860px), (hover: none) and (pointer: coarse) {
+        .pin-host { height: auto !important; }
+        .pin-viewport { position: relative; height: auto; overflow: visible; }
+        .pin-track { flex-direction: column; transform: none !important; width: 100%; }
+        .panel { width: 100%; height: auto; min-height: 0; padding: 64px 7vw; }
+        .panel::after { display: none; }
+        .scroll-rail, #page-nav.is-visible { display: none; }
+        .benefit-grid { grid-template-columns: 1fr 1fr; }
+        .media-frame-row { overflow-x: auto; padding-bottom: 8px; }
+      }
+      @media (max-width: 480px) {
+        .benefit-grid { grid-template-columns: 1fr; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pin-track { transition: none !important; }
+        .intro-scrollcue .arrow { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── FIXED NAV ── -->
+    <nav id="page-nav" aria-label="Page navigation">
+      <div class="page-nav-inner">
+        <a href="/deployed" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12.5L5.5 8l4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Deployed
+        </a>
+        <span class="nav-progress-label" id="nav-progress-label">Spotlight</span>
+      </div>
+    </nav>
+
+    <!-- ── PROGRESS RAIL ── -->
+    <div class="scroll-rail" id="scroll-rail" aria-hidden="true">
+      <span class="rail-dot" data-panel="0"></span>
+      <span class="rail-dot" data-panel="1"></span>
+      <span class="rail-dot" data-panel="2"></span>
+      <span class="rail-dot" data-panel="3"></span>
+      <span class="rail-dot" data-panel="4"></span>
+      <span class="rail-hint" id="rail-hint">Scroll</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+     COLD OPEN
+══════════════════════════════════════════════════════════ -->
+    <section class="intro">
+      <p class="intro-eyebrow" id="intro-eyebrow">Highest impact · #1 deployed initiative</p>
+      <h1 class="intro-title skel" id="intro-title">Loading the spotlight initiative…</h1>
+      <p class="intro-sub skel" id="intro-sub">Loading description…</p>
+      <div class="intro-meta-row" id="intro-meta-row"></div>
+      <div class="intro-scrollcue">
+        <span class="arrow">↓</span> Scroll to begin the story
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+     HORIZONTAL SCROLL STORY — 5 panels
+══════════════════════════════════════════════════════════ -->
+    <div class="pin-host" id="pin-host">
+      <div class="pin-viewport">
+        <div class="pin-track" id="pin-track">
+
+          <!-- PANEL 1 — The problem (placeholder framing) -->
+          <section class="panel panel-problem">
+            <div class="panel-inner">
+              <p class="panel-eyebrow" style="color:var(--coral)">Before</p>
+              <h2 class="panel-heading">A manual process, working harder than it should.</h2>
+              <p class="panel-body">
+                Before this initiative went live, the work it now automates
+                was handled manually — slower, harder to scale, and more
+                exposed to inconsistency across teams and branches.
+              </p>
+              <p class="placeholder-note">Illustrative framing — the API doesn't yet capture a before/baseline metric</p>
+            </div>
+          </section>
+
+          <!-- PANEL 2 — The solution / description -->
+          <section class="panel panel-solution">
+            <div class="panel-inner">
+              <p class="panel-eyebrow">The build</p>
+              <h2 class="panel-heading skel" id="solution-heading">Loading…</h2>
+              <p class="panel-body skel" id="solution-body">Loading description…</p>
+              <div class="tech-chip-row" id="tech-chip-row"></div>
+            </div>
+          </section>
+
+          <!-- PANEL 3 — Benefits -->
+          <section class="panel panel-benefits">
+            <div class="panel-inner">
+              <p class="panel-eyebrow" style="color:var(--sun)">The impact</p>
+              <h2 class="panel-heading">What changed, in numbers.</h2>
+              <div class="benefit-grid" id="benefit-grid"></div>
+            </div>
+          </section>
+
+          <!-- PANEL 4 — Media / in-product (still illustrative) -->
+          <section class="panel panel-media">
+            <div class="panel-inner">
+              <p class="panel-eyebrow" style="color:var(--sky)">Inside the product</p>
+              <h2 class="panel-heading">A simplified look at the workflow.</h2>
+              <p class="panel-body" style="margin-bottom:6px">
+                Illustrative mockups, not live screenshots — real product
+                media can be swapped in once available.
+              </p>
+              <div class="media-frame-row">
+                <div class="media-frame">
+                  <div class="media-frame-label">Status</div>
+                  <div class="mock-score-ring"><div class="mock-score-ring-inner"><span class="n">✓</span><span class="l">Live</span></div></div>
+                  <div class="mock-chip-row"><span class="mock-chip" id="media-stream-chip">Deployed</span></div>
+                </div>
+                <div class="media-frame">
+                  <div class="media-frame-label">Summary</div>
+                  <div class="mock-bar w-90"></div>
+                  <div class="mock-bar w-70"></div>
+                  <div class="mock-bar w-50"></div>
+                  <div class="mock-bar w-90"></div>
+                  <div class="mock-bar w-70"></div>
+                  <div class="mock-chip-row" id="media-area-chip"></div>
+                </div>
+                <div class="media-frame">
+                  <div class="media-frame-label">Workflow</div>
+                  <div class="mock-bar w-50"></div>
+                  <div class="mock-bar w-90"></div>
+                  <div class="mock-bar w-70"></div>
+                  <div class="mock-bar w-50"></div>
+                  <div class="mock-chip-row"><span class="mock-chip">Automated</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PANEL 5 — Close / CTA -->
+          <section class="panel panel-close">
+            <div class="panel-inner">
+              <p class="panel-eyebrow" style="color:var(--passion)">What's next</p>
+              <h2 class="close-title" id="close-title">One of many deployed BPM initiatives now live across NCBA.</h2>
+              <p class="panel-body" id="close-body">Explore the rest, or jump back to where this one fits in the bigger pipeline.</p>
+              <div class="close-cta-row">
+                <a href="deployed.html" class="close-cta primary">
+                  See all deployed initiatives
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="/deliverystreams" class="close-cta ghost">Back to Delivery Streams</a>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "";
+
+      /* ─────────────────────────────────────────────────────────────
+   STREAM / BENEFIT FORMATTING — mirrors deployed.html
+───────────────────────────────────────────────────────────── */
+      function resolveStream(solution_type) {
+        const t = (solution_type || "").toLowerCase().trim();
+        if (t === "ai") return "ai";
+        if (t === "ibps" || t === "docusign" || t.includes("docu")) return "ibps";
+        if (t === "enterprise") return "enterprise";
+        return "rpa";
+      }
+
+      const STREAM_LABELS = {
+        ai: "AI", rpa: "RPA / PowerApps", ibps: "IBPS / DocuSign", enterprise: "Enterprise",
+      };
+
+      // icon per benefit type, reusing the icon set already in the page
+      const BENEFIT_ICONS = {
+        man_hours: `<path d="M2 8a6 6 0 1 1 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+        cost_savings_kes: `<path d="M3 13.5h10M5 13.5V7M8 13.5V4M11 13.5v5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+        users: `<circle cx="6" cy="6" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M1.8 13.5c.6-2.6 2.3-4 4.2-4s3.6 1.4 4.2 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="11.5" cy="5.5" r="1.8" stroke="currentColor" stroke-width="1.3"/>`,
+        power_applications: `<rect x="3" y="6" width="10" height="7" rx="1.6" stroke="currentColor" stroke-width="1.4"/><path d="M8 6V3.5M5.5 3.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`,
+        papers_saved: `<path d="M4 2.5h6l2.5 2.5V13a.6.6 0 0 1-.6.6H4.6A.6.6 0 0 1 4 13V2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>`,
+        same_day_completion_pct: `<path d="M8 4v4l3 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>`,
+        default: `<path d="M2 13l4-4 3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+      };
+
+      // turns one tangible_benefits entry into a {value, label} card
+      function formatBenefitCard(b) {
+        switch (b.type) {
+          case "man_hours":
+            return { value: `${Number(b.value).toLocaleString()} hrs`, label: "Staff hours saved" };
+          case "cost_savings_kes":
+            return { value: `KES ${(b.value / 1000000).toFixed(2)}M`, label: "Cost savings identified" };
+          case "users":
+            return { value: Number(b.value).toLocaleString(), label: "Staff members served" };
+          case "power_applications":
+            return { value: `${b.value}+`, label: "Power Apps delivering automation" };
+          case "papers_saved":
+            return { value: Number(b.value).toLocaleString(), label: "Papers saved" };
+          case "same_day_completion_pct":
+            return { value: `${b.value}%`, label: "Same-day completion rate" };
+          default:
+            return { value: String(b.value ?? "—"), label: b.type ? b.type.replace(/_/g, " ") : "Measured impact" };
+        }
+      }
+
+      // a short, readable one-liner for places that need a single sentence
+      // (kept aligned with the logic used in deployed.html)
+      function formatBenefitSentence(benefits) {
+        if (!benefits || benefits.length === 0) return "Delivering measurable operational impact.";
+        const b = benefits[0];
+        const card = formatBenefitCard(b);
+        return `${card.value} — ${card.label.toLowerCase()}.`;
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   STATES
+───────────────────────────────────────────────────────────── */
+      function showErrorState(message) {
+        document.getElementById("intro-title").classList.remove("skel");
+        document.getElementById("intro-title").textContent = "Couldn't load this initiative";
+        document.getElementById("intro-sub").classList.remove("skel");
+        document.getElementById("intro-sub").innerHTML = "";
+        const errBox = document.createElement("div");
+        errBox.className = "api-error";
+        errBox.innerHTML = `⚠️ ${message}<br><button onclick="location.reload()">Retry</button>`;
+        document.getElementById("intro-meta-row").after(errBox);
+        document.getElementById("solution-heading").classList.remove("skel");
+        document.getElementById("solution-heading").textContent = "—";
+        document.getElementById("solution-body").classList.remove("skel");
+        document.getElementById("solution-body").textContent = "";
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   RENDER
+───────────────────────────────────────────────────────────── */
+      function renderInitiative(item) {
+        const stream = resolveStream(item.solution_type);
+        const streamLabel = STREAM_LABELS[stream];
+        const benefits = item.tangible_benefits || [];
+
+        // — intro —
+        const introTitle = document.getElementById("intro-title");
+        introTitle.classList.remove("skel");
+        introTitle.innerHTML = `${item.name}`;
+
+        const introSub = document.getElementById("intro-sub");
+        introSub.classList.remove("skel");
+        introSub.textContent = item.description
+          ? (item.description.length > 180 ? item.description.slice(0, 177) + "…" : item.description)
+          : "The highest-ranked deployed BPM initiative, live across NCBA.";
+
+        document.getElementById("intro-meta-row").innerHTML = `
+          <span class="intro-chip">${streamLabel}</span>
+          ${item.business_area ? `<span class="intro-chip">${item.business_area}</span>` : ""}
+        `;
+
+        // — solution panel —
+        document.getElementById("solution-heading").classList.remove("skel");
+        document.getElementById("solution-heading").textContent = item.name;
+        document.getElementById("solution-body").classList.remove("skel");
+        document.getElementById("solution-body").textContent =
+          item.description || "No description provided for this initiative yet.";
+        document.getElementById("tech-chip-row").innerHTML = `
+          <span class="tech-chip">${streamLabel}</span>
+          ${item.business_area ? `<span class="tech-chip">${item.business_area}</span>` : ""}
+          ${item.solution_type ? `<span class="tech-chip">${item.solution_type}</span>` : ""}
+        `;
+
+        // — benefits grid —
+        const benefitGrid = document.getElementById("benefit-grid");
+        if (benefits.length === 0) {
+          benefitGrid.innerHTML = `
+            <div class="benefit-card">
+              <div class="benefit-val">—</div>
+              <div class="benefit-label">No tangible benefits recorded for this initiative yet</div>
+            </div>`;
+        } else {
+          benefitGrid.innerHTML = benefits
+            .map((b) => {
+              const card = formatBenefitCard(b);
+              const icon = BENEFIT_ICONS[b.type] || BENEFIT_ICONS.default;
+              return `
+                <div class="benefit-card">
+                  <div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 16 16" fill="none">${icon}</svg></div>
+                  <div class="benefit-val">${card.value}</div>
+                  <div class="benefit-label">${card.label}</div>
+                </div>`;
+            })
+            .join("");
+        }
+
+        // — media panel chips —
+        document.getElementById("media-stream-chip").textContent = streamLabel;
+        document.getElementById("media-area-chip").innerHTML = item.business_area
+          ? `<span class="mock-chip">${item.business_area}</span>`
+          : "";
+
+        // — close panel —
+        document.getElementById("close-title").textContent =
+          `${item.name} is one of many deployed BPM initiatives now live across NCBA.`;
+        document.getElementById("close-body").textContent = formatBenefitSentence(benefits);
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   BOOT
+───────────────────────────────────────────────────────────── */
+      async function init() {
+        try {
+          const response = await fetch(`${API_BASE}/`, { headers: { Accept: "application/json" } });
+          if (!response.ok) throw new Error(`API returned ${response.status} ${response.statusText}`);
+          const data = await response.json();
+
+          const section3 = data.section_3 || data;
+          const initiatives = section3.initiatives || [];
+          if (initiatives.length === 0) throw new Error("No initiatives returned by the API.");
+
+          // Rank #1 = first item in array order, as agreed — swap to a
+          // sort by impact_score (or similar) here once that field exists.
+          const top = initiatives[0];
+          renderInitiative(top);
+        } catch (err) {
+          console.error("Failed to load spotlight initiative:", err);
+          showErrorState(err.message || "Unable to reach the API at 127.0.0.1:8000");
+        } finally {
+          startScrollEngine();
+        }
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+   HORIZONTAL SCROLL ENGINE — unchanged mechanics
+───────────────────────────────────────────────────────────── */
+      function startScrollEngine() {
+        const pinHost = document.getElementById("pin-host");
+        const pinTrack = document.getElementById("pin-track");
+        const panels = Array.from(pinTrack.children);
+        const panelCount = panels.length;
+        const nav = document.getElementById("page-nav");
+        const rail = document.getElementById("scroll-rail");
+        const railDots = Array.from(document.querySelectorAll(".rail-dot"));
+        const railHint = document.getElementById("rail-hint");
+        const navLabel = document.getElementById("nav-progress-label");
+
+        const PANEL_TITLES = ["The problem", "The build", "The impact", "Inside the product", "What's next"];
+
+        let isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+        let isNarrow = window.innerWidth <= 860;
+
+        function setHostHeight() {
+          if (isNarrow || isCoarsePointer) { pinHost.style.height = "auto"; return; }
+          pinHost.style.height = `${panelCount * 100}vh`;
+        }
+
+        function updateTrack() {
+          if (isNarrow || isCoarsePointer) return;
+          const hostRect = pinHost.getBoundingClientRect();
+          const hostTop = hostRect.top;
+          const hostHeight = pinHost.offsetHeight;
+          const viewportH = window.innerHeight;
+          const scrollableDistance = hostHeight - viewportH;
+
+          let progress = -hostTop / scrollableDistance;
+          progress = Math.max(0, Math.min(1, progress));
+
+          const maxTranslate = (panelCount - 1) * window.innerWidth;
+          const translateX = progress * maxTranslate;
+          pinTrack.style.transform = `translateX(-${translateX}px)`;
+
+          const inStory = hostTop < viewportH * 0.1 && hostRect.bottom > viewportH * 0.1;
+          nav.classList.toggle("is-visible", inStory);
+          rail.classList.toggle("is-visible", inStory);
+
+          const activeIndex = Math.min(panelCount - 1, Math.round(progress * (panelCount - 1)));
+          railDots.forEach((dot, i) => dot.classList.toggle("is-active", i === activeIndex));
+          railHint.textContent = progress > 0.97 ? "End" : "Scroll";
+          navLabel.textContent = `Spotlight · ${PANEL_TITLES[activeIndex]}`;
+        }
+
+        function onResize() {
+          isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+          isNarrow = window.innerWidth <= 860;
+          if (isNarrow || isCoarsePointer) pinTrack.style.transform = "none";
+          setHostHeight();
+          updateTrack();
+        }
+
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => { updateTrack(); ticking = false; });
+            ticking = true;
+          }
+        });
+        window.addEventListener("resize", onResize);
+
+        setHostHeight();
+        updateTrack();
+      }
+
+      init();
+    </script>
+  </body>
+</html>

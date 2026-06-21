@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deployed · REA Pipeline · NCBA Group</title>
+    <style>
+      :root {
+        --cocoa: #39302d;
+        --cocoa-light: #5a4a45;
+        --sky: #3ab3e5;
+        --sky-dim: rgba(58, 179, 229, 0.15);
+        --coral: #e4032c;
+        --coral-dim: rgba(228, 3, 44, 0.08);
+        --sun: #f8e200;
+        --passion: #9f197e;
+        --passion-dim: rgba(159, 25, 126, 0.1);
+        --med: #00a8a9;
+        --med-dim: rgba(0, 168, 169, 0.12);
+        --white: #ffffff;
+        --off-white: #f7f5f3;
+        --border: rgba(57, 48, 45, 0.1);
+        --border-light: rgba(255, 255, 255, 0.12);
+        --radius: 12px;
+        --radius-lg: 20px;
+        --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; font-size: 16px; }
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: var(--off-white);
+        color: var(--cocoa);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      button { cursor: pointer; font-family: inherit; border: none; background: none; }
+      a { color: inherit; text-decoration: none; }
+
+      /* TOP BAR */
+      #page-nav {
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(57, 48, 45, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-light);
+      }
+      .page-nav-inner {
+        max-width: 1280px; margin: 0 auto; padding: 0 28px;
+        height: 58px; display: flex; align-items: center; gap: 14px;
+      }
+      .back-link {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s;
+      }
+      .back-link:hover { color: var(--sky); }
+      .back-link svg { flex-shrink: 0; }
+      .page-nav-title {
+        font-size: 13px; color: rgba(255,255,255,0.35); margin-left: 4px;
+        padding-left: 14px; border-left: 1px solid rgba(255,255,255,0.15);
+      }
+
+      /* JOURNEY TRAIL */
+      .journey-trail {
+        max-width: 1280px; margin: 0 auto; padding: 22px 28px 0;
+        display: flex; align-items: center; flex-wrap: wrap;
+      }
+      .trail-step {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+        color: rgba(57,48,45,0.4); transition: color 0.2s;
+      }
+      .trail-step.is-link { cursor: pointer; }
+      .trail-step.is-link:hover { color: var(--cocoa); }
+      .trail-dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: rgba(57,48,45,0.25); flex-shrink: 0; transition: var(--transition);
+      }
+      .trail-step.is-done .trail-dot { background: var(--med); }
+      .trail-step.is-current { color: var(--cocoa); }
+      .trail-step.is-current .trail-dot { background: var(--sky); box-shadow: 0 0 0 4px var(--sky-dim); }
+      .trail-line { width: 34px; height: 1px; background: rgba(57,48,45,0.18); margin: 0 12px; flex-shrink: 0; }
+
+      /* PAGE HEADER */
+      .page-header { max-width: 1280px; margin: 0 auto; padding: 30px 28px 8px; }
+      .page-eyebrow {
+        font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--med); margin-bottom: 10px;
+      }
+      .page-title {
+        font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+        line-height: 1.15; color: var(--cocoa); letter-spacing: -0.02em; margin-bottom: 12px;
+      }
+      .page-title em { font-style: normal; color: var(--passion); }
+      .page-sub { font-size: 15px; color: rgba(57,48,45,0.62); max-width: 620px; line-height: 1.7; }
+      .sun-rule { width: 40px; height: 3px; background: var(--sun); border-radius: 2px; margin: 18px 0 0; }
+
+      /* CONTAINER */
+      .container { max-width: 1280px; margin: 0 auto; padding: 0 28px 60px; }
+
+      /* STORY CARD */
+      .story-card-wrap { margin-top: 40px; }
+      .story-card {
+        position: relative; background: var(--cocoa);
+        border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.08);
+        padding: 32px 32px 38px; overflow: hidden;
+        box-shadow: 0 20px 50px rgba(57,48,45,0.18);
+      }
+      .story-card::before {
+        content: ""; position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(58,179,229,0.1), transparent 45%),
+          radial-gradient(circle at 88% 85%, rgba(159,25,126,0.08), transparent 50%);
+        pointer-events: none;
+      }
+      .story-card-head { position: relative; z-index: 1; margin-bottom: 22px; }
+      .story-card-eyebrow {
+        font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+      }
+      .story-card-title { font-size: 19px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+
+      /* TAGS */
+      .stream-tag {
+        display: inline-flex; align-items: center; gap: 5px;
+        font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+        padding: 4px 10px; border-radius: 20px; text-transform: uppercase; white-space: nowrap;
+      }
+      .tag-ai { background: var(--sky-dim); color: var(--sky); }
+      .tag-rpa { background: var(--med-dim); color: var(--med); }
+      .tag-ibps { background: var(--coral-dim); color: var(--coral); }
+      .tag-enterprise { background: var(--passion-dim); color: var(--passion); }
+      .impact-badge {
+        display: inline-flex; align-items: center; gap: 5px;
+        font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+        padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+        background: rgba(248,226,0,0.14); color: var(--sun); white-space: nowrap;
+      }
+
+      /* FEATURED INITIATIVE */
+      .featured-initiative {
+        position: relative; z-index: 1;
+        display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+        padding: 26px 26px 24px; border-radius: 18px;
+        background: linear-gradient(155deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
+        border: 1px solid rgba(255,255,255,0.16);
+        cursor: pointer; transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+      .featured-initiative:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.32); }
+      .featured-left { flex: 1; min-width: 0; }
+      .featured-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+      .featured-title {
+        font-size: clamp(19px, 2.4vw, 23px); font-weight: 700;
+        color: #fff; letter-spacing: -0.01em; margin-bottom: 9px;
+      }
+      .featured-benefit { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55; max-width: 540px; }
+      .featured-chevron {
+        flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.6);
+        transition: transform 0.3s ease, background 0.25s ease, color 0.25s ease;
+      }
+      .featured-initiative.is-open .featured-chevron {
+        transform: rotate(90deg); background: var(--sky); color: #0b1a20;
+      }
+      .featured-detail { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease; }
+      .featured-initiative.is-open .featured-detail { max-height: 260px; opacity: 1; margin-top: 16px; }
+      .featured-detail-text {
+        font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.7;
+        padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); max-width: 540px;
+      }
+      .featured-detail-meta {
+        font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.32);
+        margin-top: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+      }
+
+      /* RUNNER-UP GRID */
+      .runner-grid {
+        position: relative; z-index: 1;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px;
+      }
+      .runner-card {
+        padding: 18px; border-radius: 14px;
+        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+        transition: border-color 0.2s ease;
+      }
+      .runner-card:hover { border-color: rgba(255,255,255,0.22); }
+      .runner-rank {
+        font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.3);
+        letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;
+      }
+      .runner-title { font-size: 13.5px; font-weight: 700; color: #fff; line-height: 1.35; margin: 10px 0 8px; }
+      .runner-benefit { font-size: 11.5px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+      /* VIEW-ALL CTA */
+      .view-all-row { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: 28px; }
+      .view-all-cta {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 13px 26px; border-radius: 30px;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+        color: #fff; font-size: 13px; font-weight: 600;
+        transition: background 0.25s, border-color 0.25s, transform 0.25s;
+      }
+      .view-all-cta:hover { background: var(--sky); color: #0b1a20; border-color: var(--sky); transform: translateY(-2px); }
+
+      /* JOURNEY PAGER */
+      .journey-pager {
+        max-width: 1280px; margin: 48px auto 0; padding: 0 28px;
+        display: flex; align-items: stretch; gap: 16px;
+      }
+      .pager-link {
+        flex: 1; display: flex; align-items: center; gap: 14px;
+        padding: 18px 22px; border-radius: var(--radius);
+        background: var(--white); border: 1px solid var(--border);
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      .pager-link:hover {
+        transform: translateY(-2px);
+        border-color: rgba(58,179,229,0.4);
+        box-shadow: 0 14px 30px rgba(57,48,45,0.1);
+      }
+      .pager-link.is-next { justify-content: flex-end; text-align: right; flex-direction: row-reverse; }
+      .pager-arrow {
+        flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+        background: var(--off-white); display: flex; align-items: center; justify-content: center; color: var(--cocoa);
+      }
+      .pager-text-eyebrow {
+        font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+        text-transform: uppercase; color: rgba(57,48,45,0.45); margin-bottom: 3px;
+      }
+      .pager-text-title { font-size: 14px; font-weight: 700; color: var(--cocoa); }
+
+      /* EXPANDED OVERLAY */
+      .pipeline-overlay {
+        position: fixed; inset: 0; z-index: 200; background: var(--cocoa);
+        display: flex; flex-direction: column;
+        opacity: 0; visibility: hidden;
+        transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .pipeline-overlay.open { opacity: 1; visibility: visible; }
+      .pipeline-overlay::before {
+        content: ""; position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 15% 10%, rgba(58,179,229,0.09), transparent 45%),
+          radial-gradient(circle at 85% 90%, rgba(159,25,126,0.08), transparent 50%);
+        pointer-events: none;
+      }
+      .overlay-topbar {
+        position: relative; z-index: 1;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 32px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;
+      }
+      .overlay-title-block .story-card-eyebrow { margin-bottom: 4px; }
+      .overlay-title-block .story-card-title { font-size: 21px; }
+      .overlay-close {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+        color: #fff; display: flex; align-items: center; justify-content: center;
+        font-size: 18px; transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+      }
+      .overlay-close:hover { background: rgba(255,255,255,0.18); transform: scale(1.06); }
+
+      /* search + filter toolbar */
+      .overlay-toolbar {
+        position: relative; z-index: 1;
+        display: flex; align-items: center; gap: 14px; padding: 20px 32px;
+        border-bottom: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; flex-shrink: 0;
+      }
+      .search-wrap { position: relative; flex: 1; min-width: 220px; max-width: 340px; }
+      .search-icon {
+        position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+        color: rgba(255,255,255,0.4); pointer-events: none;
+      }
+      .search-input {
+        width: 100%; padding: 11px 16px 11px 38px; border-radius: 30px;
+        background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+        color: #fff; font-size: 13px;
+      }
+      .search-input::placeholder { color: rgba(255,255,255,0.35); }
+      .search-input:focus { outline: none; border-color: var(--sky); }
+      .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+      .filter-chip {
+        padding: 9px 16px; border-radius: 30px;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.55); font-size: 12px; font-weight: 600;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+      }
+      .filter-chip.is-active { background: #fff; color: var(--cocoa); border-color: #fff; }
+
+      .results-meta {
+        position: relative; z-index: 1; padding: 14px 32px 0;
+        font-size: 12px; color: rgba(255,255,255,0.4); flex-shrink: 0;
+      }
+
+      .deployed-list-stage {
+        position: relative; z-index: 1; flex: 1; overflow: auto; padding: 14px 32px 40px;
+      }
+      .deployed-list { display: flex; flex-direction: column; gap: 8px; max-width: 880px; margin: 0 auto; }
+      .deployed-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 14px 18px; border-radius: 12px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .deployed-row:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.16); }
+      .deployed-rank { flex-shrink: 0; width: 38px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); }
+      .deployed-tag { flex-shrink: 0; }
+      .deployed-title {
+        flex: 1.1 1 220px; font-size: 13.5px; font-weight: 600; color: #fff;
+        min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .deployed-benefit {
+        flex: 1.3 1 260px; font-size: 12px; color: rgba(255,255,255,0.5);
+        min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .deployed-area {
+        flex-shrink: 0; font-size: 11px; color: rgba(255,255,255,0.3);
+        font-weight: 600; white-space: nowrap;
+      }
+      .empty-state { text-align: center; padding: 70px 20px; color: rgba(255,255,255,0.4); font-size: 13px; }
+
+      /* RESPONSIVE */
+      @media (max-width: 900px) { .runner-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 760px) {
+        .story-card { padding: 24px 20px 28px; }
+        .featured-initiative { flex-direction: column; }
+        .featured-chevron { align-self: flex-end; margin-top: -8px; }
+        .deployed-benefit, .deployed-area { display: none; }
+        .overlay-toolbar { padding: 18px 20px; }
+        .deployed-list-stage { padding: 14px 16px 32px; }
+        .search-wrap { max-width: none; width: 100%; }
+        .journey-pager { flex-direction: column; }
+        .pager-link.is-next { flex-direction: row; text-align: left; justify-content: flex-start; }
+      }
+      @media (max-width: 480px) { .runner-grid { grid-template-columns: 1fr; } }
+      @media (prefers-reduced-motion: reduce) {
+        .featured-initiative, .runner-card, .pipeline-overlay, .pager-link, .view-all-cta { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- TOP NAV -->
+    <nav id="page-nav" aria-label="Page navigation">
+      <div class="page-nav-inner">
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12.5L5.5 8l4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to StoryHub
+        </a>
+        <span class="page-nav-title">Deployed</span>
+      </div>
+    </nav>
+
+    <!-- JOURNEY TRAIL -->
+    <div class="journey-trail" aria-label="Story progress">
+      <a href="/ideas-journey" class="trail-step is-done is-link">
+        <span class="trail-dot"></span>
+        Ideas Journey
+      </a>
+      <span class="trail-line"></span>
+      <a href="/deliverystreams" class="trail-step is-done is-link">
+        <span class="trail-dot"></span>
+        Delivery Streams
+      </a>
+      <a href="/deployed" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step is-current">
+        <span class="trail-dot"></span>
+        Deployed
+      </span></a> 
+      <a href="/cost-savings" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step ">
+        <span class="trail-dot"></span>
+        Cost Savings
+      </a>
+      <a href="/man-hours" class="trail-step is-done is-link">
+      <span class="trail-line"></span>
+      <span class="trail-step ">
+        <span class="trail-dot"></span>
+        Man Hours
+      </a>
+    </div>
+    
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+      <p class="page-eyebrow">Deployed</p>
+      <h1 class="page-title">Built. Shipped. <em>Live</em>.</h1>
+      <p class="page-sub" id="page-sub-text">
+        <!-- Populated from JSON -->
+      </p>
+      <div class="sun-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="container">
+      <div class="story-card-wrap">
+        <div class="story-card">
+          <div class="story-card-head">
+            <p class="story-card-eyebrow">High Impact</p>
+            <h2 class="story-card-title">Top 5 deployed initiatives</h2>
+          </div>
+
+          <!-- Featured / #1 -->
+          <div
+            class="featured-initiative"
+            id="featured-initiative"
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+            aria-label="Top deployed initiative — click for details"
+          >
+            <div class="featured-left">
+              <div class="featured-badges" id="featured-badges"></div>
+              <h3 class="featured-title" id="featured-title"></h3>
+              <p class="featured-benefit" id="featured-benefit"></p>
+              <div class="featured-detail" id="featured-detail">
+                <p class="featured-detail-text" id="featured-blurb"></p>
+                <p class="featured-detail-meta" id="featured-area"></p>
+              </div>
+            </div>
+            <div class="featured-chevron" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M6 3.5L10.5 8 6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Runner-ups 2-5 -->
+          <div class="runner-grid" id="runner-grid"></div>
+
+          <!-- View all CTA -->
+          <div class="view-all-row">
+            <button class="view-all-cta" id="view-all-btn">
+              <span id="view-all-label">View all deployed initiatives</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOURNEY PAGER -->
+      <div class="journey-pager">
+        <a href="/deliverystreams" class="pager-link is-prev">
+          <span class="pager-arrow">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M10 12.5L5.5 8l4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>
+            <p class="pager-text-eyebrow">Previous</p>
+            <p class="pager-text-title">Delivery Streams</p>
+          </span>
+        </a>
+        <a href="/cost-savings" class="pager-link is-next">
+          <span class="pager-arrow">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M6 3.5L10.5 8 6 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>
+            <p class="pager-text-eyebrow">Next</p>
+            <p class="pager-text-title">Cost Savings</p>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- FULLSCREEN OVERLAY -->
+    <div
+      class="pipeline-overlay"
+      id="pipeline-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="All deployed initiatives"
+    >
+      <div class="overlay-topbar">
+        <div class="overlay-title-block">
+          <p class="story-card-eyebrow">Deployed</p>
+          <h2 class="story-card-title">All deployed initiatives</h2>
+        </div>
+        <button class="overlay-close" id="overlay-close-btn" aria-label="Close expanded view">✕</button>
+      </div>
+
+      <div class="overlay-toolbar">
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input
+            type="text" class="search-input" id="search-input"
+            placeholder="Search by name or description…"
+            aria-label="Search deployed initiatives"
+          />
+        </div>
+        <div class="filter-chips" id="filter-chips">
+          <button class="filter-chip is-active" data-stream="all">All</button>
+          <button class="filter-chip" data-stream="ai">AI</button>
+          <button class="filter-chip" data-stream="rpa">RPA / PowerApps</button>
+          <button class="filter-chip" data-stream="ibps">IBPS / DocuSign</button>
+          <button class="filter-chip" data-stream="enterprise">Enterprise</button>
+        </div>
+      </div>
+
+      <p class="results-meta" id="results-meta"></p>
+
+      <div class="deployed-list-stage">
+        <div class="deployed-list" id="deployed-list"></div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://127.0.0.1:8000";
+
+      /* ─────────────────────────────────────────────────────────────
+         STREAM CONFIG
+      ───────────────────────────────────────────────────────────── */
+      const STREAM_LABELS = {
+        ai: "AI",
+        rpa: "RPA / PowerApps",
+        ibps: "IBPS / DocuSign",
+        enterprise: "Enterprise",
+      };
+
+      function resolveStream(solution_type) {
+        const t = (solution_type || "").toLowerCase().trim();
+        if (t === "ai") return "ai";
+        if (t === "ibps" || t === "docusign" || t.includes("docu")) return "ibps";
+        if (t === "enterprise") return "enterprise";
+        return "rpa";
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+         FORMAT BENEFIT
+      ───────────────────────────────────────────────────────────── */
+      function formatBenefit(benefits) {
+        if (!benefits || benefits.length === 0) return "Operational efficiency gains";
+        const b = benefits[0];
+        switch (b.type) {
+          case "man_hours":
+            return b.value > 0
+              ? `Saves ${b.value.toLocaleString()} staff hours`
+              : "Improves process efficiency";
+          case "cost_savings_kes":
+            return `KES ${(b.value / 1000000).toFixed(2)}M cost savings identified`;
+          case "users":
+            return `Serving ${b.value.toLocaleString()} staff members across NCBA`;
+          case "power_applications":
+            return `${b.value}+ Power Apps delivering automation bank-wide`;
+          case "papers_saved":
+            return `${b.value.toLocaleString()} papers saved; ${benefits[2]?.value || ""}% same-day completion`;
+          case "same_day_completion_pct":
+            return `${b.value}% same-day document completion rate`;
+          default:
+            return "Delivering measurable operational impact";
+        }
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+         LOADING / ERROR STATES
+      ───────────────────────────────────────────────────────────── */
+      function showLoadingState() {
+        document.getElementById("page-sub-text").textContent = "Loading initiatives…";
+        document.getElementById("featured-title").textContent = "Loading…";
+        document.getElementById("featured-benefit").textContent = "";
+        document.getElementById("featured-badges").innerHTML = "";
+        document.getElementById("runner-grid").innerHTML = Array(4).fill(`
+          <div class="runner-card" style="opacity:0.4">
+            <div class="runner-rank">Loading…</div>
+            <div class="runner-title" style="background:rgba(255,255,255,0.1);height:14px;border-radius:4px;margin:10px 0 8px"></div>
+            <div style="background:rgba(255,255,255,0.06);height:10px;border-radius:4px"></div>
+          </div>
+        `).join("");
+        document.getElementById("deployed-list").innerHTML =
+          `<div class="empty-state">Fetching initiatives from API…</div>`;
+      }
+
+      function showErrorState(message) {
+        document.getElementById("page-sub-text").textContent =
+          "Could not load initiatives. Please check the API is running and try refreshing.";
+        document.getElementById("featured-title").textContent = "Failed to load";
+        document.getElementById("featured-benefit").textContent = message;
+        document.getElementById("runner-grid").innerHTML = "";
+        document.getElementById("deployed-list").innerHTML =
+          `<div class="empty-state">⚠️ ${message}<br><br>
+           <button onclick="location.reload()" style="margin-top:12px;padding:10px 20px;border-radius:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;cursor:pointer;font-size:13px">
+             Retry
+           </button></div>`;
+        document.getElementById("results-meta").textContent = "";
+        document.getElementById("view-all-label").textContent = "View deployed initiatives";
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+         RENDER FUNCTIONS
+      ───────────────────────────────────────────────────────────── */
+      let ALL_INITIATIVES = [];
+      let HERO_INITIATIVES = [];
+      let activeStream = "all";
+      let searchQuery = "";
+
+      function renderFeatured() {
+        const f = HERO_INITIATIVES[0];
+        if (!f) return;
+        document.getElementById("featured-badges").innerHTML = `
+          <span class="impact-badge">★ High impact</span>
+          <span class="stream-tag tag-${f.stream}">${STREAM_LABELS[f.stream]}</span>
+        `;
+        document.getElementById("featured-title").textContent = f.title;
+        document.getElementById("featured-benefit").textContent = f.benefit;
+        document.getElementById("featured-blurb").textContent = f.description;
+        document.getElementById("featured-area").textContent =
+          `Business Area: ${f.business_area} · Solution: ${f.solution_type}`;
+      }
+
+      function renderRunners() {
+        const html = HERO_INITIATIVES.slice(1).map(item => `
+          <div class="runner-card">
+            <div class="runner-rank">#${String(item.rank).padStart(2, "0")} · High impact</div>
+            <span class="stream-tag tag-${item.stream}">${STREAM_LABELS[item.stream]}</span>
+            <h4 class="runner-title">${item.title}</h4>
+            <p class="runner-benefit">${item.benefit}</p>
+          </div>
+        `).join("");
+        document.getElementById("runner-grid").innerHTML = html;
+      }
+
+      function renderList() {
+        const filtered = ALL_INITIATIVES.filter(item => {
+          const matchesStream = activeStream === "all" || item.stream === activeStream;
+          const haystack = (item.title + " " + item.benefit + " " + item.description + " " + item.business_area).toLowerCase();
+          const matchesSearch = searchQuery === "" || haystack.includes(searchQuery);
+          return matchesStream && matchesSearch;
+        });
+
+        document.getElementById("results-meta").textContent =
+          `Showing ${filtered.length} of ${ALL_INITIATIVES.length} deployed initiatives`;
+
+        const listEl = document.getElementById("deployed-list");
+        if (filtered.length === 0) {
+          listEl.innerHTML = `<div class="empty-state">No initiatives match your search. Try a different keyword or filter.</div>`;
+          return;
+        }
+
+        listEl.innerHTML = filtered.map(item => `
+          <div class="deployed-row">
+            <span class="deployed-rank">#${String(item.rank).padStart(3, "0")}</span>
+            <span class="deployed-tag stream-tag tag-${item.stream}">${STREAM_LABELS[item.stream]}</span>
+            <span class="deployed-title">${item.title}</span>
+            <span class="deployed-benefit">${item.benefit}</span>
+            <span class="deployed-area">${item.business_area}</span>
+          </div>
+        `).join("");
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+         INTERACTIONS
+      ───────────────────────────────────────────────────────────── */
+      function setupFeaturedToggle() {
+        const card = document.getElementById("featured-initiative");
+        function goToSpotlight() {
+        window.location.href = "spotlight.html";
+      }
+      card.addEventListener("click", goToSpotlight);
+      card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); goToSpotlight(); }
+  });
+}
+
+      function setupOverlay() {
+        const overlay = document.getElementById("pipeline-overlay");
+        const openBtn = document.getElementById("view-all-btn");
+        const closeBtn = document.getElementById("overlay-close-btn");
+
+        function open() { overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
+        function close() { overlay.classList.remove("open"); document.body.style.overflow = ""; }
+
+        openBtn.addEventListener("click", open);
+        closeBtn.addEventListener("click", close);
+        overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
+        document.addEventListener("keydown", e => {
+          if (e.key === "Escape" && overlay.classList.contains("open")) close();
+        });
+      }
+
+      function setupSearchAndFilter() {
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", () => {
+          searchQuery = searchInput.value.trim().toLowerCase();
+          renderList();
+        });
+
+        document.querySelectorAll(".filter-chip").forEach(chip => {
+          chip.addEventListener("click", () => {
+            activeStream = chip.dataset.stream;
+            document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("is-active"));
+            chip.classList.add("is-active");
+            renderList();
+          });
+        });
+      }
+
+      /* ─────────────────────────────────────────────────────────────
+         BOOT — fetch from API then render
+      ───────────────────────────────────────────────────────────── */
+      async function init() {
+        showLoadingState();
+        setupFeaturedToggle();
+        setupOverlay();
+        setupSearchAndFilter();
+
+        try {
+          const response = await fetch(`${API_BASE}/`, {
+            headers: { "Accept": "application/json" }
+          });
+
+          if (!response.ok) {
+            throw new Error(`API returned ${response.status} ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          /* Extract sections — supports both flat and nested shapes */
+          const section2 = data.section_2 || data;
+          const section3 = data.section_3 || data;
+
+          const rawInitiatives = section3.initiatives || [];
+          const deployedCount = section2?.metrics?.deployed_initiatives ?? rawInitiatives.length;
+          const pipelineCount = section2?.metrics?.ideas_in_pipeline ?? rawInitiatives.length;
+
+          /* Build normalised initiative objects */
+          ALL_INITIATIVES = rawInitiatives.map((item, i) => ({
+            rank: i + 1,
+            stream: resolveStream(item.solution_type),
+            title: item.name,
+            benefit: formatBenefit(item.tangible_benefits),
+            description: item.description || "",
+            business_area: item.business_area || "NCBA",
+            solution_type: item.solution_type || "",
+            tangible_benefits: item.tangible_benefits || [],
+            isHero: i < 5,
+          }));
+
+          HERO_INITIATIVES = ALL_INITIATIVES.filter(d => d.isHero);
+
+          /* Update static text */
+          document.getElementById("page-sub-text").textContent =
+            `${deployedCount} BPM initiatives are now live across NCBA, with ${pipelineCount} progressing through the pipeline. Here are the five making the biggest difference right now — or search the full catalogue of everything that's gone live.`;
+
+          document.getElementById("view-all-label").textContent =
+            `View all ${rawInitiatives.length} deployed initiatives`;
+
+          /* Render all panels */
+          renderFeatured();
+          renderRunners();
+          renderList();
+
+        } catch (err) {
+          console.error("Failed to load initiatives:", err);
+          showErrorState(err.message || "Unable to reach the API at 127.0.0.1:8000");
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>
