@@ -23,7 +23,7 @@ export function renderHero() {
 
   // Wire up click events after the HTML is in the DOM
   document.getElementById("hero-ideas-card")?.addEventListener("click", () => {
-    window.location.href = "ideas-journey.html";
+    window.location.href = "/ideas-journey";
   });
 
 
@@ -79,8 +79,8 @@ function buildDeployedCard(value) {
 }
 
 function buildSmallRow(metrics) {
-  const costHtml  = buildSmallCard("current_cost_savings",  metrics.cost_savings_identified_kes,  "💰", "Expected Cost Saved",  "cost-savings.html");
-  const hoursHtml = buildSmallCard("current_man_hours_saved", metrics.man_hours_saved, "⏱️", "Expected Hrs Saved", "man-hours.html");
+  const costHtml  = buildSmallCard("current_cost_savings",  metrics.cost_savings_identified_kes,  "💰", "Expected Cost Saved",  "/cost-savings");
+  const hoursHtml = buildSmallCard("current_man_hours_saved", metrics.man_hours_saved, "⏱️", "Expected Hrs Saved", "/man-hours");
 
   if (!costHtml && !hoursHtml) return "";
   return `<div class="hero-dashboard-small-row">${costHtml}${hoursHtml}</div>`;
