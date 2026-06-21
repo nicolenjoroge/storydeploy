@@ -12,14 +12,7 @@ import gc
 app = FastAPI()
 
 
-# Serve frontend assets (CSS/JS/images)
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Serve uploaded images
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
-
-# Serve JSON data folder (optional but useful)
-app.mount("/data", StaticFiles(directory="data"), name="data")
 
 DATA_FILE = "data/story.json"
 API_BASE = os.getenv("API_BASE", "")
@@ -49,6 +42,14 @@ def write_data(data):
 # ---------------------------------------
 # ✅ GET FULL CONTENT
 # ---------------------------------------
+@app.get("/debug/data")
+def debug_data():
+    return {
+        "file_exists": os.path.exists(DATA_FILE),
+        "keys": list(read_data().keys()),
+        "data": read_data()
+    }
+
 @app.get("/api/content")
 def get_all():
     return read_data()
@@ -305,6 +306,15 @@ def add_item(section: str, list_name: str, item: dict):
 
     return {"message": "Item added successfully"}
 
+
+# Serve frontend assets (CSS/JS/images)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Serve uploaded images
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+# Serve JSON data folder (optional but useful)
+app.mount("/data", StaticFiles(directory="data"), name="data")
 
 
 # ---------------------------------------
