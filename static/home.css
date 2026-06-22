@@ -807,6 +807,32 @@ button {
   line-height: 1.8;
   margin-bottom: 18px;
 }
+.rea-video{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.rea-video video{
+    width:100%;
+    max-width:600px;
+    border-radius:24px;
+    object-fit:cover;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.15);
+}
+
+@media (max-width: 900px){
+    .rea-grid{
+        grid-template-columns:1fr;
+    }
+
+    .rea-video{
+        order:-1;
+    }
+}
+
 .rea-metrics-col {
   display: flex;
   flex-direction: column;
