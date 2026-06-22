@@ -68,7 +68,7 @@ function buildDeployedCard(value) {
   return `
     <div class="glass-card card-deployed" role="listitem" tabindex="0"
          aria-label="Deployed initiatives: ${value}"
-         data-hero-link="deployed.html">
+         data-hero-link="/deployed">
       <div class="glass-card-icon" aria-hidden="true">🚀</div>
       <div class="glass-card-tap" aria-hidden="true">↗</div>
       <div class="glass-card-val">
