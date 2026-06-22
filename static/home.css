@@ -799,7 +799,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  align-items: start;
+  align-items: center;
 }
 .rea-narrative p {
   font-size: 16px;
@@ -831,57 +831,6 @@ button {
     .rea-video{
         order:-1;
     }
-}
-
-.rea-metrics-col {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.rea-metric-card {
-  background: var(--off-white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-.rea-metric-card:hover {
-  transform: translateX(4px);
-  box-shadow: -3px 0 0 var(--med);
-}
-.rea-metric-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: var(--med-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 20px;
-}
-.rea-metric-data {
-  flex: 1;
-}
-.rea-metric-num {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--med);
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-.rea-metric-desc {
-  font-size: 12px;
-  color: rgba(57, 48, 45, 0.5);
-  margin-top: 3px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 /* ════════════════════════════════════════════════════════════
